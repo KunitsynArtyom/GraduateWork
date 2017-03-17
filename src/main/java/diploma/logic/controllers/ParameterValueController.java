@@ -26,4 +26,12 @@ public class ParameterValueController {
         model.addAttribute("parameterValueList", parameterValueList);
         return "parameterValues";
     }
+
+    @RequestMapping("/{id}")
+    public String showInfo(Model model, @PathVariable("id") Integer id){
+        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+        ParameterValueRepo parameterValueRepo = context.getBean(ParameterValueRepo.class);
+        model.addAttribute("parameterValue",  parameterValueRepo.findById(id));
+        return "info/parameterValueInfo";
+    }
 }

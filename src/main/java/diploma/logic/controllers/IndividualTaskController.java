@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.IndividualTask;
 import diploma.logic.repositories.IndividualTaskRepo;
+import diploma.logic.repositories.ParameterValueRepo;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,9 @@ public class IndividualTaskController {
     public String showInfo(Model model, @PathVariable("id") Integer id){
         ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
+        ParameterValueRepo parameterValueRepo = context.getBean(ParameterValueRepo.class);
         model.addAttribute("individualTask", individualTaskRepo.findById(id));
+        model.addAttribute("parameterValueList", parameterValueRepo.findByIndividualTaskId(id));
         return "info/individualTaskInfo";
     }
 }

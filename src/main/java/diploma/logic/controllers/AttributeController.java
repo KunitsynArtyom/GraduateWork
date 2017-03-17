@@ -21,7 +21,7 @@ import java.util.List;
 public class AttributeController {
 
     @RequestMapping("/all")
-    public String showConnectionList(Model model){
+    public String showAttributeList(Model model){
         ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         AttributeRepo repo = context.getBean(AttributeRepo.class);
         List<Attribute> attributeList = repo.getAllAttributeList();

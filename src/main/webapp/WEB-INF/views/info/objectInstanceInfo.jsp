@@ -22,7 +22,7 @@
     <div class="list-group">
         <a href="#" class="list-group-item active">
             <h4 class="list-group-item-heading">Type</h4>
-            <p class="list-group-item-text">Object Instance</p>
+            <h2 class="list-group-item-text">Object Instance</h2>
         </a>
         <a class="list-group-item">
             <h4 class="list-group-item-heading">Object Instance ID</h4>
@@ -36,7 +36,7 @@
 </div>
 
 <div class="container">
-    <p>Click on the button to show elements that reference on current element.</p>
+    <p>Click on the button to show elements that reference to this element.</p>
     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">More information</button>
     <div id="demo" class="collapse">
         <div class="container">

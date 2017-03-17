@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.Parameter;
 import diploma.logic.repositories.ParameterRepo;
+import diploma.logic.repositories.ParameterValueRepo;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,9 @@ public class ParameterController {
     public String showInfo(Model model, @PathVariable("id") Integer id){
         ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ParameterRepo parameterRepo = context.getBean(ParameterRepo.class);
+        ParameterValueRepo parameterValueRepo = context.getBean(ParameterValueRepo.class);
         model.addAttribute("parameter",  parameterRepo.findById(id));
+        model.addAttribute("parameterValueList",  parameterValueRepo.findByParameterId(id));
         return "info/parameterInfo";
     }
 }

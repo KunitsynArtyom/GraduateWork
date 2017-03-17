@@ -27,7 +27,7 @@
 						<li><a href="<spring:url value="/objectState/all"/>">Object States</a></li>
 						<li><a href="<spring:url value="/objectInstanceList/all"/>">Object Instance List</a></li>
 						<li><a href="<spring:url value="/connection/all"/>">Connections</a></li>
-						<li><a href="<spring:url value="/connectionState/all"/>">Connection State</a></li>
+						<li><a href="<spring:url value="/connectionState/all"/>">Connection States</a></li>
 						<li><a href="<spring:url value="/connectionInstance/all"/>">Connection Instances</a></li>
 						<li><a href="<spring:url value="/massProblem/all"/>">Mass Problems</a></li>
 						<li><a href="<spring:url value="/attribute/all"/>">Attributes</a></li>

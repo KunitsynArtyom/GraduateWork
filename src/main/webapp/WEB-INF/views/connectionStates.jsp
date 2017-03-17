@@ -29,9 +29,9 @@
         <c:forEach items="${connectionStateList}" var="connectionState">
             <tr>
                 <td><a href="${connectionState.id}"/> <c:out value="${connectionState.id}" /></td>
-                <td><c:out value="${connectionState.subjectDomainStateId}" /></td>
-                <td><c:out value="${connectionInstanceId.connectionInstanceId}" /></td>
-                <td><c:out value="${connectionInstanceId.name}" /></td>
+                <td><a href="<spring:url value="/subjectDomainState/${connectionState.subjectDomainStateId}"/>"><c:out value="${connectionState.subjectDomainStateId}" /></a></td>
+                <td><c:out value="${connectionState.connectionInstanceId}" /></td>
+                <td><c:out value="${connectionState.name}" /></td>
             </tr>
         </c:forEach>
         </body>

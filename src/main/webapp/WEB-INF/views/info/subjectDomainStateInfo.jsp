@@ -22,7 +22,7 @@
     <div class="list-group">
         <a href="#" class="list-group-item active">
             <h4 class="list-group-item-heading">Type</h4>
-            <p class="list-group-item-text">Subject Domain State</p>
+            <h2 class="list-group-item-text">Subject Domain State</h2>
         </a>
         <a class="list-group-item">
             <h4 class="list-group-item-heading">Subject Domain State Id</h4>
@@ -40,7 +40,7 @@
 </div>
 
 <div class="container">
-    <p>Click on the button to show elements that reference on current element.</p>
+    <p>Click on the button to show elements that reference to this element.</p>
     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">More information</button>
     <div id="demo" class="collapse">
         <div class="container">
@@ -53,7 +53,7 @@
                 </tr>
                 <c:forEach items="${connectionStateList}" var="connectionState">
                     <tr>
-                        <td><c:out value="${connectionState.id}" /></td>
+                        <td><a href="<spring:url value="/connectionState/${connectionState.id}"/>"><c:out value="${connectionState.id}" /></a></td>
                         <td><c:out value="${connectionState.connectionInstanceId}" /></td>
                         <td><c:out value="${connectionState.name}" /></td>
                     </tr>

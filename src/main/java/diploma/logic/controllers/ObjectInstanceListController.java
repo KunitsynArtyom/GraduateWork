@@ -18,7 +18,7 @@ import java.util.List;
 public class ObjectInstanceListController {
 
     @RequestMapping("/all")
-    public String showObjectInstanceListsList(Model model){
+    public String showObjectInstanceListList(Model model){
         ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjectInstanceListRepo repo = context.getBean(ObjectInstanceListRepo.class);
         List<ObjectInstanceList> objectInstanceListsList = repo.getAllObjectInstanceListsList();

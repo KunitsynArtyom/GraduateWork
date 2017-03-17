@@ -20,7 +20,7 @@
 
 <div class="container">
 
-    <h2>Attribute Vakues</h2>
+    <h2>Attribute Values</h2>
     <table class="table table-hover table-bordered">
         <body>
         <tr>
@@ -29,7 +29,7 @@
         <c:forEach items="${attributeValueList}" var="attributeValue">
             <tr>
                 <td><a href="${attributeValue.id}"/> <c:out value="${attributeValue.id}" /></td>
-                <td><a href="<spring:url value="/attribute/${attributeValue.attributeId}"/>"><c:out value="${attribute.attributeId}" /></a></td>
+                <td><a href="<spring:url value="/attribute/${attributeValue.attributeId}"/>"><c:out value="${attributeValue.attributeId}" /></a></td>
                 <td><c:out value="${attributeValue.attributeValue}" /></td>
             </tr>
         </c:forEach>

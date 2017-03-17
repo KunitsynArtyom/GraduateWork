@@ -22,19 +22,23 @@
     <div class="list-group">
         <a href="#" class="list-group-item active">
             <h4 class="list-group-item-heading">Type</h4>
-            <h2 class="list-group-item-text">Connection</h2>
+            <h2 class="list-group-item-text">Connection State</h2>
         </a>
         <a class="list-group-item">
-            <h4 class="list-group-item-heading">Connection ID</h4>
-            <p class="list-group-item-text">${connection.id}</p>
+            <h4 class="list-group-item-heading">Connection State ID</h4>
+            <p class="list-group-item-text">${connectionState.id}</p>
         </a>
-        <a href="/subjectDomain/${connection.subjectDomainId}" class="list-group-item">
-            <h4 class="list-group-item-heading">Subject Domain ID</h4>
-            <p class="list-group-item-text">${connection.subjectDomainId}</p>
+        <a href="/subjectDomainState/${connectionState.subjectDomainStateId}" class="list-group-item">
+            <h4 class="list-group-item-heading">Subject Domain State Id</h4>
+            <p class="list-group-item-text">${connectionState.subjectDomainStateId}</p>
         </a>
         <a class="list-group-item">
-            <h4 class="list-group-item-heading">Connection Name</h4>
-            <p class="list-group-item-text">${connection.name}</p>
+            <h4 class="list-group-item-heading">Connection Instance Id</h4>
+            <p class="list-group-item-text">${connectionState.connectionInstanceId}</p>
+        </a>
+        <a class="list-group-item">
+            <h4 class="list-group-item-heading">Connection State Name</h4>
+            <p class="list-group-item-text">${connectionState.name}</p>
         </a>
     </div>
 </div>

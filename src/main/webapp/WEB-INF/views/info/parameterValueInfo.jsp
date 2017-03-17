@@ -22,19 +22,23 @@
     <div class="list-group">
         <a href="#" class="list-group-item active">
             <h4 class="list-group-item-heading">Type</h4>
-            <h2 class="list-group-item-text">Connection</h2>
+            <h2 class="list-group-item-text">Parameter Value</h2>
         </a>
         <a class="list-group-item">
-            <h4 class="list-group-item-heading">Connection ID</h4>
-            <p class="list-group-item-text">${connection.id}</p>
+            <h4 class="list-group-item-heading">Parameter ID</h4>
+            <p class="list-group-item-text">${parameterValue.id}</p>
         </a>
-        <a href="/subjectDomain/${connection.subjectDomainId}" class="list-group-item">
-            <h4 class="list-group-item-heading">Subject Domain ID</h4>
-            <p class="list-group-item-text">${connection.subjectDomainId}</p>
+        <a href="/individualTask/${parameterValue.individualTaskId}" class="list-group-item">
+            <h4 class="list-group-item-heading">Individual Task Id</h4>
+            <p class="list-group-item-text">${parameterValue.individualTaskId}</p>
         </a>
         <a class="list-group-item">
-            <h4 class="list-group-item-heading">Connection Name</h4>
-            <p class="list-group-item-text">${connection.name}</p>
+            <h4 class="list-group-item-heading">Parameter Id</h4>
+            <p class="list-group-item-text">${parameterValue.parameterId}</p>
+        </a>
+        <a class="list-group-item">
+            <h4 class="list-group-item-heading">Parameter Value</h4>
+            <p class="list-group-item-text">${parameterValue.parameterValue}</p>
         </a>
     </div>
 </div>

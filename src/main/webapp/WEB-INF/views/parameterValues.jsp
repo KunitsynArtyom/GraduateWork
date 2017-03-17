@@ -29,9 +29,8 @@
         <c:forEach items="${parameterValueList}" var="parameterValue">
             <tr>
                 <td><a href="${parameterValue.id}"/> <c:out value="${parameterValue.id}" /></td>
-<%--                <td><a href="<spring:url value="/massProblem/${parameter.massProblemId}"/>"><c:out value="${parameter.massProblemId}" /></a></td>--%>
-                <td><c:out value="${parameterValue.individualTaskId}" /></td>
-                <td><c:out value="${parameterValue.parameterId}" /></td>
+                <td><a href="<spring:url value="/individualTask/${parameterValue.individualTaskId}"/>"><c:out value="${parameterValue.individualTaskId}" /></a></td>
+                <td><a href="<spring:url value="/parameter/${parameterValue.parameterId}"/>"><c:out value="${parameterValue.parameterId}" /></a></td>
                 <td><c:out value="${parameterValue.parameterValue}" /></td>
             </tr>
         </c:forEach>

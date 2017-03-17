@@ -30,7 +30,6 @@
             <tr>
                 <td><a href="${object.id}"/> <c:out value="${object.id}" /></td>
                 <td><a href="<spring:url value="/subjectDomain/${object.subjectDomainId}"/>"><c:out value="${object.subjectDomainId}" /></a></td>
-<%--                <td>&lt;%&ndash;<a href="${object.objectInstanceId}"/> &ndash;%&gt;<c:out value="${object.objectInstanceId}" /></td>--%>
                 <td><a href="<spring:url value="/objectInstance/${object.objectInstanceId}"/>"><c:out value="${object.objectInstanceId}" /></a></td>
                 <td><c:out value="${object.name}" /></td>
             </tr>

@@ -22,7 +22,7 @@
     <div class="list-group">
         <a href="#" class="list-group-item active">
             <h4 class="list-group-item-heading">Type</h4>
-            <p class="list-group-item-text">Individual Task</p>
+            <h2 class="list-group-item-text">Individual Task</h2>
         </a>
         <a class="list-group-item">
             <h4 class="list-group-item-heading">Individual Task ID</h4>
@@ -32,5 +32,29 @@
             <h4 class="list-group-item-heading">Mass Problem ID</h4>
             <p class="list-group-item-text">${individualTask.massProblemId}</p>
         </a>
+    </div>
+</div>
+
+<div class="container">
+    <p>Click on the button to show elements that reference to this element.</p>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">More information</button>
+    <div id="demo" class="collapse">
+        <div class="container">
+            <h2>Parameter Values</h2>
+            <table class="table table-hover table-bordered">
+                <body>
+                <tr>
+                    <th>Parameter Value Id</th><th>Parameter Id</th><th>Parameter Value</th>
+                </tr>
+                <c:forEach items="${parameterValueList}" var="parameterValue">
+                    <tr>
+                        <td><a href="<spring:url value="/parameterValue/${parameterValue.id}"/>"><c:out value="${parameterValue.id}" /></a></td>
+                        <td><a href="<spring:url value="/parameter/${parameterValue.parameterId}"/>"><c:out value="${parameterValue.parameterId}" /></a></td>
+                        <td><c:out value="${parameterValue.parameterValue}" /></td>
+                    </tr>
+                </c:forEach>
+                </body>
+            </table>
+        </div>
     </div>
 </div>
