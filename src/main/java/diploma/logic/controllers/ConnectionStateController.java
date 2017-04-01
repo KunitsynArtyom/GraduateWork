@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.ConnectionState;
 import diploma.logic.repositories.ConnectionStateRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,13 @@ import java.util.List;
 @RequestMapping("/connectionState")
 public class ConnectionStateController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showConnectionStateList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ConnectionStateRepo repo = context.getBean(ConnectionStateRepo.class);
         List<ConnectionState> connectionStateList = repo.getAllConnectionStateList();
         model.addAttribute("connectionStateList", connectionStateList);
@@ -28,7 +33,6 @@ public class ConnectionStateController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ConnectionStateRepo connectionStateRepo = context.getBean(ConnectionStateRepo.class);
         model.addAttribute("connectionState", connectionStateRepo.findById(id));
         return "info/connectionStateInfo";

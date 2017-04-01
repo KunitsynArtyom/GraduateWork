@@ -4,6 +4,7 @@ import diploma.logic.entities.MassProblem;
 import diploma.logic.repositories.IndividualTaskRepo;
 import diploma.logic.repositories.MassProblemRepo;
 import diploma.logic.repositories.ParameterRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,13 @@ import java.util.List;
 @RequestMapping("/massProblem")
 public class MassProblemController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showMassProblemList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         MassProblemRepo repo = context.getBean(MassProblemRepo.class);
         List<MassProblem> massProblemList = repo.getAllMassProblemList();
         model.addAttribute("massProblemList", massProblemList);
@@ -31,7 +36,6 @@ public class MassProblemController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         MassProblemRepo massProblemRepo = context.getBean(MassProblemRepo.class);
         ParameterRepo parameterRepo = context.getBean(ParameterRepo.class);
         IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);

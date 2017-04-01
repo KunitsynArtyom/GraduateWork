@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.ObjectState;
 import diploma.logic.repositories.ObjectStateRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,13 @@ import java.util.List;
 @RequestMapping("/objectState")
 public class ObjectStateController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showObjectListList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjectStateRepo repo = context.getBean(ObjectStateRepo.class);
         List<ObjectState> objectStateList = repo.getAllObjectStateList();
         model.addAttribute("objectStateList", objectStateList);

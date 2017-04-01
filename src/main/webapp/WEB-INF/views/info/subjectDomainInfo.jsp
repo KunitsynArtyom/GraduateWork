@@ -47,7 +47,7 @@
                 </tr>
                 <c:forEach items="${subjectDomainStateList}" var="subjectDomainState">
                     <tr>
-                        <td><c:out value="${subjectDomainState.id}" /></td>
+                        <td><a href="${subjectDomainState.id}"/> <c:out value="${subjectDomainState.id}" /></td>
                         <td><c:out value="${subjectDomainState.timeStamp}" /></td>
                     </tr>
                 </c:forEach>

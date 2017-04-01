@@ -4,6 +4,7 @@ import diploma.logic.entities.Obj;
 import diploma.logic.repositories.AttributeRepo;
 import diploma.logic.repositories.ObjRepo;
 import diploma.logic.repositories.ObjectListRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,13 @@ import java.util.List;
 @RequestMapping("/object")
 public class ObjController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showObjectList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjRepo repo = context.getBean(ObjRepo.class);
         List<Obj> objectList = repo.getAllObjList();
         model.addAttribute("objectList", objectList);
@@ -30,7 +35,6 @@ public class ObjController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjRepo objRepo = context.getBean(ObjRepo.class);
         AttributeRepo attributeRepo = context.getBean(AttributeRepo.class);
         ObjectListRepo objectListRepo = context.getBean(ObjectListRepo.class);

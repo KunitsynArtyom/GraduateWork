@@ -3,6 +3,7 @@ package diploma.logic.controllers;
 import diploma.logic.entities.ObjectInstance;
 import diploma.logic.repositories.ObjRepo;
 import diploma.logic.repositories.ObjectInstanceRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,13 @@ import java.util.List;
 @RequestMapping("/objectInstance")
 public class ObjectInstaceController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showObjectInstanceList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjectInstanceRepo repo = context.getBean(ObjectInstanceRepo.class);
         List<ObjectInstance> objectInstanceList = repo.getAllObjectInstanceList();
         model.addAttribute("objectInstanceList", objectInstanceList);
@@ -30,7 +35,6 @@ public class ObjectInstaceController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjectInstanceRepo objectInstanceRepo = context.getBean(ObjectInstanceRepo.class);
         ObjRepo objRepo = context.getBean(ObjRepo.class);
         model.addAttribute("objectInstance",  objectInstanceRepo.findById(id));

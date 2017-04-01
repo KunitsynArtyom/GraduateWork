@@ -3,6 +3,7 @@ package diploma.logic.controllers;
 import diploma.logic.entities.Attribute;
 import diploma.logic.repositories.AttributeRepo;
 import diploma.logic.repositories.AttributeValueRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,13 @@ import java.util.List;
 @RequestMapping("/attribute")
 public class AttributeController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showAttributeList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         AttributeRepo repo = context.getBean(AttributeRepo.class);
         List<Attribute> attributeList = repo.getAllAttributeList();
         model.addAttribute("attributeList", attributeList);
@@ -31,7 +36,6 @@ public class AttributeController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         AttributeRepo attributeRepo = context.getBean(AttributeRepo.class);
         AttributeValueRepo attributeValueRepo = context.getBean(AttributeValueRepo.class);
         model.addAttribute("attribute",  attributeRepo.findById(id));

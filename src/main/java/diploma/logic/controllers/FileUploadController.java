@@ -3,6 +3,9 @@ package diploma.logic.controllers;
 import diploma.logic.files.entities.FileBucket;
 import diploma.logic.files.parser.XMLParser;
 import diploma.logic.files.validators.FileValidator;
+import diploma.logic.parsers.SQLParser;
+import diploma.logic.parsers.entities.QueryAttribute;
+import net.sf.jsqlparser.JSQLParserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,21 +50,30 @@ public class FileUploadController {
     }
 
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-    public String singleFileUpload(@Valid FileBucket fileBucket, BindingResult result, ModelMap model) throws IOException, ParserConfigurationException, SAXException {
+    public String singleFileUpload(@Valid FileBucket fileBucket, BindingResult result, ModelMap model) throws IOException, ParserConfigurationException, SAXException, JSQLParserException {
+
+        List<List<QueryAttribute>> argumentsLists = new ArrayList<List<QueryAttribute>>();
+
         if (result.hasErrors()) {
             return "files/fileUpload";
         } else {
 
             MultipartFile file = fileBucket.getFile();
 
-            File serverFile = new File(rootPath + File.separator + file.getOriginalFilename());
+            File serverFile = new File(rootPath + File.separator + "tmpFiles" + File.separator + file.getOriginalFilename());
             FileOutputStream fos = new FileOutputStream(serverFile);
             fos.write(file.getBytes());
             fos.close();
 
             XMLParser xmlParser = new XMLParser();
             List<String> sqlQueriesTextList = xmlParser.parseXMLFile(serverFile);
+
+            for(String query : sqlQueriesTextList){
+                argumentsLists.add(new SQLParser(query).getArgumentsList());
+            }
+
             model.addAttribute("sqlQueriesTextList", sqlQueriesTextList);
+            model.addAttribute("argumentsLists", argumentsLists);
             return "files/fileUploadSuccess";
         }
     }

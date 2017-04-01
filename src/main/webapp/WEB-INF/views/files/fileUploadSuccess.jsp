@@ -19,11 +19,21 @@
 
 <div class="container">
     <body>
-        <div class="success">
+        <div class="container">
+            <h2>Queries</h2>
             <c:forEach items="${sqlQueriesTextList}" var="sqlQuery">
-                <tr>
-                    <td><c:out value="${sqlQuery}" /></td>
-                </tr>
+                <br><c:out value="${sqlQuery}" /></br>
+            </c:forEach>
+        </div>
+
+
+
+        <div class="container">
+            <h2>Query Arguments</h2>
+            <c:forEach items="${argumentsLists}" var="argumentList">
+                <c:forEach items="${argumentList}" var="queryArgument">
+                        <br><c:out value="${queryArgument.getName()} " /> <c:out value="${queryArgument.getQueryType()}" /></br>
+                </c:forEach>
             </c:forEach>
         </div>
     </body>

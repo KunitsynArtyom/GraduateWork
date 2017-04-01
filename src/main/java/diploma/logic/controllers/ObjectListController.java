@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.ObjectList;
 import diploma.logic.repositories.ObjectListRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,13 @@ import java.util.List;
 @RequestMapping("/objectList")
 public class ObjectListController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showObjectListList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ObjectListRepo repo = context.getBean(ObjectListRepo.class);
         List<ObjectList> objectListsList = repo.getAllObjectListsList();
         model.addAttribute("objectListsList", objectListsList);

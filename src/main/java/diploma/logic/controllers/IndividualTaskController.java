@@ -3,6 +3,7 @@ package diploma.logic.controllers;
 import diploma.logic.entities.IndividualTask;
 import diploma.logic.repositories.IndividualTaskRepo;
 import diploma.logic.repositories.ParameterValueRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,13 @@ import java.util.List;
 @RequestMapping("/individualTask")
 public class IndividualTaskController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
 
     @RequestMapping("/all")
     public String showIndividualTaskList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         IndividualTaskRepo repo = context.getBean(IndividualTaskRepo.class);
         List<IndividualTask> individualTaskList = repo.getAllIndividualTaskList();
         model.addAttribute("individualTaskList", individualTaskList);
@@ -31,7 +35,6 @@ public class IndividualTaskController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
         ParameterValueRepo parameterValueRepo = context.getBean(ParameterValueRepo.class);
         model.addAttribute("individualTask", individualTaskRepo.findById(id));

@@ -3,6 +3,7 @@ package diploma.logic.controllers;
 import diploma.logic.entities.Parameter;
 import diploma.logic.repositories.ParameterRepo;
 import diploma.logic.repositories.ParameterValueRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,13 @@ import java.util.List;
 @RequestMapping("/parameter")
 public class ParameterController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showParameterList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ParameterRepo repo = context.getBean(ParameterRepo.class);
         List<Parameter> parameterList = repo.getAllParameterList();
         model.addAttribute("parameterList", parameterList);
@@ -30,7 +35,6 @@ public class ParameterController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ParameterRepo parameterRepo = context.getBean(ParameterRepo.class);
         ParameterValueRepo parameterValueRepo = context.getBean(ParameterValueRepo.class);
         model.addAttribute("parameter",  parameterRepo.findById(id));

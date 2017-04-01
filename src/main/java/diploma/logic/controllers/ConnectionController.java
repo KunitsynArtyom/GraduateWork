@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.Connection;
 import diploma.logic.repositories.ConnectionRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,13 @@ import java.util.List;
 @RequestMapping("/connection")
 public class ConnectionController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showConnectionList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ConnectionRepo repo = context.getBean(ConnectionRepo.class);
         List<Connection> connectionList = repo.getAllConnectionList();
         model.addAttribute("connectionList", connectionList);
@@ -29,7 +34,6 @@ public class ConnectionController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         ConnectionRepo connectionRepo = context.getBean(ConnectionRepo.class);
         model.addAttribute("connection", connectionRepo.findById(id));
         return "info/connectionInfo";

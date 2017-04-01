@@ -2,6 +2,7 @@ package diploma.logic.controllers;
 
 import diploma.logic.entities.SubjectDomain;
 import diploma.logic.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -18,9 +19,13 @@ import java.util.List;
 @RequestMapping("/subjectDomain")
 public class SubjectDomainController {
 
+    private ApplicationContext context;
+
+    @Autowired
+    public void context(ApplicationContext context) { this.context = context; }
+
     @RequestMapping("/all")
     public String showSubjectDomainList(Model model){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         SubjectDomainRepo repo = context.getBean(SubjectDomainRepo.class);
         List<SubjectDomain> subjectDomainList = repo.getAllSDList();
         model.addAttribute("subjectDomainList", subjectDomainList);
@@ -29,7 +34,6 @@ public class SubjectDomainController {
 
     @RequestMapping("/{id}")
     public String showInfo(Model model, @PathVariable("id") Integer id){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
         SubjectDomainRepo sdRepo = context.getBean(SubjectDomainRepo.class);
         SubjectDomainStateRepo sdStateRepo = context.getBean(SubjectDomainStateRepo.class);
         ObjRepo objRepo = context.getBean(ObjRepo.class);
