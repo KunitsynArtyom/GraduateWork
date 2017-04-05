@@ -3,32 +3,43 @@ package diploma.logic.parsers.entities;
 /**
  * Created by Артём on 01.04.2017.
  */
-public class QueryAttribute {
+public class QueryAttribute implements Comparable<QueryAttribute> {
+    private String name;
 
-    private String name, queryType;
-
-    public QueryAttribute() {
-
+    public QueryAttribute(String name) {
+        this.name = name;
     }
 
-    public QueryAttribute(String name, String queryType) {
-        this.name = name;
-        this.queryType = queryType;
+    public int compareTo(QueryAttribute o) {
+        return this.getName().compareTo(o.getName());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof QueryAttribute)) {
+            return false;
+        }
+
+        QueryAttribute otherAttribute = (QueryAttribute) other;
+
+        return this.getName().equals(otherAttribute.getName());
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public int hashCode() {
+        return this.getName().hashCode();
     }
 
-    public String getQueryType() {
-        return queryType;
-    }
-
-    public void setQueryType(String queryType) {
-        this.queryType = queryType;
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

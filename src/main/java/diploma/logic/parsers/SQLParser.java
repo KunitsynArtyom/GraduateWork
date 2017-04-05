@@ -6,6 +6,7 @@ import diploma.logic.parsers.entities.queries.Query;
 import diploma.logic.parsers.entities.queries.SelectQuery;
 import diploma.logic.parsers.entities.queries.UpdateQuery;
 import net.sf.jsqlparser.JSQLParserException;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
  */
 public class SQLParser {
 
+    private Logger logger = Logger.getLogger(SQLParser.class);
+
     private String sqlQuery;
     public List<QueryAttribute> argumentsList;
 
@@ -21,14 +24,18 @@ public class SQLParser {
         this.sqlQuery = sqlQuery;
     }
 
-    public List<QueryAttribute> getArgumentsList() throws JSQLParserException {
+    public List<QueryAttribute> getArgumentsList(){
 
-        if(sqlQuery.toLowerCase().contains("select")){
-            argumentsList = getInnerArguments(new SelectQuery());
-        } else if(sqlQuery.toLowerCase().contains("insert")){
-            argumentsList = getInnerResults(new InsertQuery());
-        } else if(sqlQuery.toLowerCase().contains("update")){
-            argumentsList = getInnerResults(new UpdateQuery());
+        try {
+            if (sqlQuery.toLowerCase().contains("select")) {
+                argumentsList = getInnerArguments(new SelectQuery());
+            } else if (sqlQuery.toLowerCase().contains("insert")) {
+                argumentsList = getInnerResults(new InsertQuery());
+            } else if (sqlQuery.toLowerCase().contains("update")) {
+                argumentsList = getInnerResults(new UpdateQuery());
+            }
+        } catch(JSQLParserException je) {
+            logger.debug("Errors while parsing");
         }
 
         return argumentsList;

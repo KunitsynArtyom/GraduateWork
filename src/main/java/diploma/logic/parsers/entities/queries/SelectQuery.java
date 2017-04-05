@@ -22,7 +22,7 @@ public class SelectQuery implements Query {
         List<SelectItem> selectItemsList = plainSelect.getSelectItems();
 
         for(SelectItem selectItem : selectItemsList){
-            selectArgumentsList.add(new QueryAttribute(selectItem.toString(), "select"));
+            selectArgumentsList.add(new QueryAttribute(selectItem.toString()));
         }
 
         return selectArgumentsList;

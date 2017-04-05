@@ -21,7 +21,7 @@ public class InsertQuery implements Query {
         List<Column> columnList = insert.getColumns();
 
         for (Column column : columnList) {
-            innerArgumentsList.add(new QueryAttribute(column.toString(), "insert"));
+            innerArgumentsList.add(new QueryAttribute(column.toString()));
         }
 
         return innerArgumentsList;

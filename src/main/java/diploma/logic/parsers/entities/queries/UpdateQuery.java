@@ -21,7 +21,7 @@ public class UpdateQuery implements Query {
         List<Column> columnList = update.getColumns();
 
         for (Column column : columnList) {
-            innerArgumentsList.add(new QueryAttribute(column.toString(), "update"));
+            innerArgumentsList.add(new QueryAttribute(column.toString()));
         }
 
         return innerArgumentsList;
