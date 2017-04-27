@@ -18,7 +18,7 @@ public class SQLParser {
     private Logger logger = Logger.getLogger(SQLParser.class);
 
     private String sqlQuery;
-    public List<QueryAttribute> argumentsList;
+    private List<QueryAttribute> argumentsList;
 
     public SQLParser(String sqlQuery){
         this.sqlQuery = sqlQuery;

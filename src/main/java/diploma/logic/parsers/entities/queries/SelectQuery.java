@@ -17,6 +17,7 @@ public class SelectQuery implements Query {
 
     public List<QueryAttribute> getAttributes(String sqlQuery) throws JSQLParserException {
         List<QueryAttribute> selectArgumentsList = new ArrayList<QueryAttribute>();
+
         Select select = (Select) CCJSqlParserUtil.parse(sqlQuery);
         PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
         List<SelectItem> selectItemsList = plainSelect.getSelectItems();

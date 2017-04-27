@@ -23,7 +23,7 @@
             var data = google.visualization.arrayToDataTable([
                 ['Object', 'Count'],
                 <c:forEach items="${pieDataList}" var="entry">
-                [ '${entry.key}', ${entry.value} ],
+                    [ '${entry.key}', ${entry.value} ],
                 </c:forEach>
             ]);
 

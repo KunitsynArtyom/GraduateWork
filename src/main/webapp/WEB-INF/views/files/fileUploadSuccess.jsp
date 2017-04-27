@@ -32,7 +32,9 @@
             <h2>Query Arguments</h2>
             <c:forEach items="${argumentsLists}" var="argumentList">
                 <c:forEach items="${argumentList}" var="queryArgument">
-                        <br><c:out value="${queryArgument.getName()} " /> <c:out value="${queryArgument.getQueryType()}" /></br>
+                        <br><c:out value="${queryArgument.getName()} " />
+                    <%--<c:out value="${queryArgument.getQueryType()}" />--%>
+                    </br>
                 </c:forEach>
             </c:forEach>
         </div>
