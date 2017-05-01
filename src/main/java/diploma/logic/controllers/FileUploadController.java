@@ -1,8 +1,10 @@
 package diploma.logic.controllers;
 
+import diploma.logic.algos.services.AcyclicDownTopAlgorithmService;
 import diploma.logic.files.entities.FileBucket;
 import diploma.logic.files.parser.XMLParser;
 import diploma.logic.files.validators.FileValidator;
+import diploma.logic.graphs.prodsys.entities.Implication;
 import diploma.logic.parsers.SQLParser;
 import diploma.logic.parsers.entities.QueryAttribute;
 import net.sf.jsqlparser.JSQLParserException;
@@ -11,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.xml.sax.SAXException;
 
 import javax.validation.Valid;
@@ -52,7 +56,7 @@ public class FileUploadController {
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
     public String singleFileUpload(@Valid FileBucket fileBucket, BindingResult result, ModelMap model) throws IOException, ParserConfigurationException, SAXException, JSQLParserException {
 
-        List<List<QueryAttribute>> argumentsLists = new ArrayList<List<QueryAttribute>>();
+        List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
 
         if (result.hasErrors()) {
             return "files/fileUpload";
@@ -65,16 +69,26 @@ public class FileUploadController {
             fos.write(file.getBytes());
             fos.close();
 
-            XMLParser xmlParser = new XMLParser();
-            List<String> sqlQueriesTextList = xmlParser.parseXMLFile(serverFile);
+            List<List<String>> sqlQueriesTextList = new XMLParser().parseXMLFile(serverFile);
 
-            for(String query : sqlQueriesTextList){
-                argumentsLists.add(new SQLParser(query).getArgumentsList());
+            for (List<String> list : sqlQueriesTextList) {
+                implicationList.add(new SQLParser(list).getImplication());
             }
 
-            model.addAttribute("sqlQueriesTextList", sqlQueriesTextList);
-            model.addAttribute("argumentsLists", argumentsLists);
-            return "files/fileUploadSuccess";
+            AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(implicationList);
+
+            model.addAttribute("vertexList", acyclicDownTopAlgorithmService.getVertexList());
+            model.addAttribute("vertexConnectionList", acyclicDownTopAlgorithmService.getVertexConnectionList());
+            model.addAttribute("definingAttributes", acyclicDownTopAlgorithmService.getDefiningAttributes());
+            return "graphs/graph";
         }
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex) {
+        ModelAndView model = new ModelAndView("errors/error");
+        model.addObject("errMsg", ex.getMessage());
+
+        return model;
     }
 }

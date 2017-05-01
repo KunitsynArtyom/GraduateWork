@@ -8,9 +8,9 @@ public class Implication<T> {
     private Collection<T> arguments;
     private Collection<T> results;
 
-    public Implication(Collection<T> arguments, Collection<T> results) throws Exception {
+    public Implication(Collection<T> arguments, Collection<T> results) {
         this.arguments = new ArrayList<T>(arguments);
-        this.results = results;
+        this.results = new ArrayList<T>(results);
     }
 
     public Collection<T> getArguments() {
@@ -18,7 +18,7 @@ public class Implication<T> {
     }
 
     public Collection<T> getResult() {
-        return results;
+        return new ArrayList<T>(results);
     }
 
     @Override

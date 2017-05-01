@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class XMLParser {
 
-    public List<String> parseXMLFile(File file) throws ParserConfigurationException, IOException, SAXException {
+    public List<List<String>> parseXMLFile(File file) throws ParserConfigurationException, IOException, SAXException {
 
-        List<String> sqlQueriesTextList = new ArrayList<String>();
+        List<List<String>> sqlQueryAttributeLists = new ArrayList<List<String>>();
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -34,11 +34,17 @@ public class XMLParser {
             Node nNode = nList.item(temp);
 
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                List<String> sqlQueryAttributeList = new ArrayList<String>();
                 Element eElement = (Element) nNode;
-                sqlQueriesTextList.add(eElement.getElementsByTagName("text").item(0).getTextContent());
+                for(int i = 0; i < eElement.getElementsByTagName("text").getLength(); i++){
+                    sqlQueryAttributeList.add(eElement.getElementsByTagName("text").item(i).getTextContent());
+                }
+
+                sqlQueryAttributeLists.add(sqlQueryAttributeList);
             }
         }
 
-        return sqlQueriesTextList;
+        return sqlQueryAttributeLists;
     }
 }
