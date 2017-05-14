@@ -19,32 +19,26 @@ import java.util.List;
  */
 public class XMLParser {
 
-    public List<List<String>> parseXMLFile(File file) throws ParserConfigurationException, IOException, SAXException {
+    public List<String> parseXMLFile(File file) throws ParserConfigurationException, IOException, SAXException {
 
-        List<List<String>> sqlQueryAttributeLists = new ArrayList<List<String>>();
+        List<String> sqlQueriesTextList = new ArrayList<String>();
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file);
         doc.getDocumentElement().normalize();
 
-        NodeList nList = doc.getElementsByTagName("query");
+        NodeList nList = doc.getElementsByTagName("function");
 
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
 
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                List<String> sqlQueryAttributeList = new ArrayList<String>();
                 Element eElement = (Element) nNode;
-                for(int i = 0; i < eElement.getElementsByTagName("text").getLength(); i++){
-                    sqlQueryAttributeList.add(eElement.getElementsByTagName("text").item(i).getTextContent());
-                }
-
-                sqlQueryAttributeLists.add(sqlQueryAttributeList);
+                sqlQueriesTextList.add(eElement.getElementsByTagName("text").item(0).getTextContent());
             }
         }
 
-        return sqlQueryAttributeLists;
+        return sqlQueriesTextList;
     }
 }

@@ -12,4 +12,6 @@ public interface MassProblemRepo extends Repo<MassProblem> {
     List<MassProblem> getAllMassProblemList();
 
     List<MassProblem> findBySDId(Integer id);
+
+    List<String> getAllDistinctSDList();
 }

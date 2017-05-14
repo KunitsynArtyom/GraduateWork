@@ -1,7 +1,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+    <style>
+        .form-control-inline {
+            min-width: 0;
+            width: auto;
+            display: inline;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,18 +32,51 @@
     <table class="table table-hover table-bordered">
         <body>
         <tr>
-            <th>Mass Problem Id</th><th>Subject Domain Id</th><th>Mass Problem Name</th>
+            <th>Mass Problem Id</th>
+            <th>Subject Domain Id</th>
+            <th>Mass Problem Name</th>
         </tr>
         <c:forEach items="${massProblemList}" var="massProblem">
             <tr>
-                <td><a href="${massProblem.id}"/> <c:out value="${massProblem.id}" /></td>
-                <td><a href="<spring:url value="/subjectDomain/${massProblem.subjectDomainId}"/>"><c:out value="${massProblem.subjectDomainId}" /></a></td>
-                <td><c:out value="${massProblem.name}" /></td>
+                <td><a href="${massProblem.id}"/> <c:out value="${massProblem.id}"/></td>
+                <td><a href="<spring:url value="/subjectDomain/${massProblem.subjectDomainId}"/>"><c:out
+                        value="${massProblem.subjectDomainId}"/></a></td>
+                <td><c:out value="${massProblem.name}"/></td>
             </tr>
         </c:forEach>
         </body>
     </table>
 
 </div>
+
+<div class="container">
+    <div class="row">
+
+        <spring:url value="/massProblem/all" var="formUrl"/>
+        <form:form modelAttribute="request" action="${formUrl}" method="post"
+                   cssClass="col-md-8 col-md-offset-2">
+
+            <div class="form-group">
+                <label for="subjectDomainSelect">Select SD mass problems to parse</label>
+                <select class="form-control form-control-inline" id="subjectDomainSelect" name="request">
+                    <c:forEach items="${massProblemDistinctList}" var="string">
+                        <option><c:out value="${string}"/></option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <%--<div class="form-group">--%>
+                <%--<label for="searchString">Select SD mass problems to parse:</label>--%>
+                <%--<input type="text" size="5" id="searchString"--%>
+                       <%--class="form-control" name="request"/>--%>
+            <%--</div>--%>
+
+            <button type="submit" class="btn btn-default">Parse</button>
+
+        </form:form>
+
+    </div>
+</div>
+
 </body>
 </html>

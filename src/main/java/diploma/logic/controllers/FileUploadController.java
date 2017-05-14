@@ -5,6 +5,7 @@ import diploma.logic.files.entities.FileBucket;
 import diploma.logic.files.parser.XMLParser;
 import diploma.logic.files.validators.FileValidator;
 import diploma.logic.graphs.prodsys.entities.Implication;
+import diploma.logic.parsers.SQLFunctionParser;
 import diploma.logic.parsers.SQLParser;
 import diploma.logic.parsers.entities.QueryAttribute;
 import net.sf.jsqlparser.JSQLParserException;
@@ -56,8 +57,6 @@ public class FileUploadController {
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
     public String singleFileUpload(@Valid FileBucket fileBucket, BindingResult result, ModelMap model) throws IOException, ParserConfigurationException, SAXException, JSQLParserException {
 
-        List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
-
         if (result.hasErrors()) {
             return "files/fileUpload";
         } else {
@@ -69,9 +68,15 @@ public class FileUploadController {
             fos.write(file.getBytes());
             fos.close();
 
-            List<List<String>> sqlQueriesTextList = new XMLParser().parseXMLFile(serverFile);
+            List<String> sqlQueriesTextList = new XMLParser().parseXMLFile(serverFile);
+            List<List<String>> parsedFunctionQueryList = new ArrayList<List<String>>();
+            List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
 
-            for (List<String> list : sqlQueriesTextList) {
+            for (String queryText : sqlQueriesTextList) {
+                parsedFunctionQueryList.add(new SQLFunctionParser(queryText).parseSQLFunction());
+            }
+
+            for (List<String> list : parsedFunctionQueryList) {
                 implicationList.add(new SQLParser(list).getImplication());
             }
 
