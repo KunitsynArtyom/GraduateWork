@@ -92,8 +92,8 @@ public class FileUploadController {
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllException(Exception ex) {
         ModelAndView model = new ModelAndView("errors/error");
-        model.addObject("errMsg", ex.getMessage());
 
+        model.addObject("errMsg", ex.getMessage());
         return model;
     }
 }

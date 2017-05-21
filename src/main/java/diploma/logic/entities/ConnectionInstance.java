@@ -5,16 +5,16 @@ package diploma.logic.entities;
  */
 public class ConnectionInstance {
 
-    private Integer id, objectInstanceId;
+    private Integer id, connectionId;
     private String name;
 
     public ConnectionInstance(){
 
     }
 
-    public ConnectionInstance(Integer id, Integer objectInstanceId, String name) {
+    public ConnectionInstance(Integer id, Integer connectionId, String name) {
         this.id = id;
-        this.objectInstanceId = objectInstanceId;
+        this.connectionId = connectionId;
         this.name = name;
     }
 
@@ -26,12 +26,12 @@ public class ConnectionInstance {
         this.id = id;
     }
 
-    public Integer getObjectInstanceId() {
-        return objectInstanceId;
+    public Integer getConnectionId() {
+        return connectionId;
     }
 
-    public void setObjectInstanceId(Integer objectInstanceId) {
-        this.objectInstanceId = objectInstanceId;
+    public void setConnectionId(Integer connection_id) {
+        this.connectionId = connection_id;
     }
 
     public String getName() {

@@ -19,6 +19,7 @@ public class ObjectInstanceListRepoImpl implements ObjectInstanceListRepo {
     private JdbcTemplate template;
 
     private static final String GET_ALL_OBJ_INST_LISTS_LIST = "SELECT * FROM \"public\".\"object_instance_list\"";
+    private static final String FIND_OBJ_INST_LIST_BY_CONN_INST = "SELECT * FROM object_instance_list WHERE connection_instance_id = ?;";
 
     @Autowired
     public ObjectInstanceListRepoImpl(DataSource dataSource){
@@ -27,6 +28,10 @@ public class ObjectInstanceListRepoImpl implements ObjectInstanceListRepo {
 
     public List<ObjectInstanceList> getAllObjectInstanceListsList(){
         return this.template.query(GET_ALL_OBJ_INST_LISTS_LIST, new Object[] {}, new ObjectInstanceListMapper());
+    }
+
+    public List<ObjectInstanceList> findObjectInstanceListByConnectionInstance(Integer id){
+        return this.template.query(FIND_OBJ_INST_LIST_BY_CONN_INST, new Object[] {id}, new ObjectInstanceListMapper());
     }
 
     public ObjectInstanceList findById(Integer id){

@@ -38,7 +38,6 @@ public class ObjectInstaceController {
         ObjectInstanceRepo objectInstanceRepo = context.getBean(ObjectInstanceRepo.class);
         ObjRepo objRepo = context.getBean(ObjRepo.class);
         model.addAttribute("objectInstance",  objectInstanceRepo.findById(id));
-        model.addAttribute("objectList",  objRepo.findByObjInstanceId(id));
         return "info/objectInstanceInfo";
     }
 }

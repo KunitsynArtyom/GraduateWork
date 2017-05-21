@@ -3,15 +3,15 @@ package diploma.logic.algos.entities;
 /**
  * Created by Артём on 16.04.2017.
  */
-public class MassProblem implements Comparable<MassProblem> {
+public class AlgoMassProblem implements Comparable<AlgoMassProblem> {
 
     private String name;
 
-    public MassProblem(String name) {
+    public AlgoMassProblem(String name) {
         this.name = name;
     }
 
-    public int compareTo(MassProblem o) {
+    public int compareTo(AlgoMassProblem o) {
         return this.getName().compareTo(o.getName());
     }
 
@@ -21,11 +21,11 @@ public class MassProblem implements Comparable<MassProblem> {
             return true;
         }
 
-        if (!(other instanceof ConnectionInstance)) {
+        if (!(other instanceof AlgoConnectionInstance)) {
             return false;
         }
 
-        MassProblem otherMassProblem = (MassProblem) other;
+        AlgoMassProblem otherMassProblem = (AlgoMassProblem) other;
 
         return this.getName() == otherMassProblem.getName();
     }

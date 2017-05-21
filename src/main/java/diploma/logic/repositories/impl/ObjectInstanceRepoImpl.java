@@ -20,6 +20,7 @@ public class ObjectInstanceRepoImpl implements ObjectInstanceRepo {
 
     private static final String GET_ALL_OBJ_INST_LIST = "SELECT * FROM \"public\".\"object_instance\"";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM \"public\".\"object_instance\" WHERE object_instance_id = ?";
+    private static  final String FIND_BY_OBJ_ID = "SELECT * FROM \"public\".\"object_instance\" WHERE object_id = ?";
 
     @Autowired
     public ObjectInstanceRepoImpl(DataSource dataSource){
@@ -32,5 +33,9 @@ public class ObjectInstanceRepoImpl implements ObjectInstanceRepo {
 
     public ObjectInstance findById(Integer id){
         return this.template.queryForObject(FIND_BY_ID_QUERY, new Object[] {id}, new ObjectInstanceMapper());
+    }
+
+    public List<ObjectInstance> findByObjId(Integer id){
+        return this.template.query(FIND_BY_OBJ_ID, new Object[] {id}, new ObjectInstanceMapper());
     }
 }

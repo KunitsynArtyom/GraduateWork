@@ -11,7 +11,7 @@ public interface ObjectListRepo extends Repo<ObjectList> {
 
     List<ObjectList> getAllObjectListsList();
 
-/*    List<ObjectList> findIdByConnId(Integer id);*/
+    List<ObjectList> findByConnId(Integer id);
 
     List<ObjectList> findByObjId(Integer id);
 }

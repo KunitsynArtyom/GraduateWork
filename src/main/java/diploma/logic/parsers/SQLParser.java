@@ -2,6 +2,8 @@ package diploma.logic.parsers;
 
 import diploma.logic.graphs.prodsys.entities.Implication;
 import diploma.logic.parsers.entities.QueryAttribute;
+import diploma.logic.parsers.entities.function.FunctionHeader;
+import diploma.logic.parsers.entities.function.ReturnStatement;
 import diploma.logic.parsers.entities.queries.InsertQuery;
 import diploma.logic.parsers.entities.queries.Query;
 import diploma.logic.parsers.entities.queries.SelectQuery;
@@ -19,27 +21,39 @@ public class SQLParser {
 
     private Logger logger = Logger.getLogger(SQLParser.class);
 
-    private List<String> sqlQueryList;
-    private List<QueryAttribute> attributes;
-    private List<QueryAttribute> results;
+    private List<String> sqlLexList;
+    private List<QueryAttribute> outerAttributes;
+    private List<QueryAttribute> innerAttributes;
+    private List<QueryAttribute> outerResults;
+    private List<QueryAttribute> innerResults;
 
-    public SQLParser(List<String> sqlQueryList) {
-        this.sqlQueryList = sqlQueryList;
-        this.attributes = new ArrayList<QueryAttribute>();
-        this.results = new ArrayList<QueryAttribute>();
+    public SQLParser(List<String> sqlLexList) {
+        this.sqlLexList = sqlLexList;
+        this.outerAttributes = new ArrayList<QueryAttribute>();
+        this.innerAttributes = new ArrayList<QueryAttribute>();
+        this.outerResults = new ArrayList<QueryAttribute>();
+        this.innerResults = new ArrayList<QueryAttribute>();
     }
 
     public Implication<QueryAttribute> getImplication() {
 
+        for(String str : sqlLexList){
+            System.out.println(str);
+        }
+
         try {
 
-            for (String sqlQuery : sqlQueryList) {
-                if (sqlQuery.toLowerCase().contains("select")) {
-                    attributes.addAll(getInnerArguments(new SelectQuery(), sqlQuery));
-                } else if (sqlQuery.toLowerCase().contains("insert")) {
-                    results.addAll(getInnerResults(new InsertQuery(), sqlQuery));
-                } else if (sqlQuery.toLowerCase().contains("update")) {
-                    results.addAll(getInnerResults(new UpdateQuery(), sqlQuery));
+            for (String sqlLex : sqlLexList) {
+                if (sqlLex.toLowerCase().contains("select")) {
+                    innerAttributes.addAll(getInnerArguments(new SelectQuery(), sqlLex));
+                } else if (sqlLex.toLowerCase().contains("insert")) {
+                    innerResults.addAll(getInnerResults(new InsertQuery(), sqlLex));
+                } else if (sqlLex.toLowerCase().contains("update")) {
+                    innerResults.addAll(getInnerResults(new UpdateQuery(), sqlLex));
+                } else if (sqlLex.toLowerCase().contains("return")){
+                    outerResults.addAll(new ReturnStatement().getAttributes(sqlLex));
+                } else {
+                    outerAttributes.addAll(new FunctionHeader().getAttributes(sqlLex));
                 }
             }
 
@@ -47,7 +61,7 @@ public class SQLParser {
             logger.debug("Errors while parsing");
         }
 
-        return new Implication<QueryAttribute>(attributes, results);
+        return new Implication<QueryAttribute>(innerAttributes, outerAttributes, innerResults, outerResults);
     }
 
     private List<QueryAttribute> getInnerArguments(Query query, String sqlQuery) throws JSQLParserException {

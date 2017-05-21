@@ -39,10 +39,9 @@ public class MassProblemController {
         MassProblemRepo repo = context.getBean(MassProblemRepo.class);
         List<MassProblem> massProblemList = repo.getAllMassProblemList();
         List<String> massProblemDistinctList = repo.getAllDistinctSDList();
-        Request request = new Request(new String());
         model.addAttribute("massProblemList", massProblemList);
         model.addAttribute("massProblemDistinctList", massProblemDistinctList);
-        model.addAttribute("request", request);
+        model.addAttribute("request", new Request(new String()));
         return "massProblems";
     }
 
@@ -61,18 +60,18 @@ public class MassProblemController {
     public String parseSD(Model model, @ModelAttribute Request request){
         MassProblemRepo massProblemRepo = context.getBean(MassProblemRepo.class);
         List<MassProblem> massProblemList = massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
-        List<List<String>> parsedFunctionQueryList = new ArrayList<List<String>>();
-        List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
+//        List<List<String>> parsedFunctionQueryList = new ArrayList<List<String>>();
+//        List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
+//
+//        for (MassProblem massProblem : massProblemList) {
+//            parsedFunctionQueryList.add(new SQLFunctionParser(massProblem.getName()).parseSQLFunction());
+//        }
+//
+//        for (List<String> list : parsedFunctionQueryList) {
+//            implicationList.add(new SQLParser(list).getImplication());
+//        }
 
-        for (MassProblem massProblem : massProblemList) {
-            parsedFunctionQueryList.add(new SQLFunctionParser(massProblem.getName()).parseSQLFunction());
-        }
-
-        for (List<String> list : parsedFunctionQueryList) {
-            implicationList.add(new SQLParser(list).getImplication());
-        }
-
-        AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(implicationList);
+        AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(AcyclicDownTopAlgorithmService.createImplicationList(massProblemList));
 
         model.addAttribute("vertexList", acyclicDownTopAlgorithmService.getVertexList());
         model.addAttribute("vertexConnectionList", acyclicDownTopAlgorithmService.getVertexConnectionList());

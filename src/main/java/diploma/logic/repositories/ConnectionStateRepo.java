@@ -13,5 +13,9 @@ public interface ConnectionStateRepo extends Repo<ConnectionState> {
 /*
     List<ConnectionState> findIdByConnectionInstanceId(Integer id);*/
 
+    List<ConnectionState> findBySDStateId(Integer id);
+
+    List<Integer> getAllDistinctSDStateBySDId(Integer id);
+
     List<ConnectionState> findBySDId(Integer id);
 }

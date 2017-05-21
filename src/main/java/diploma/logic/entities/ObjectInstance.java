@@ -5,15 +5,16 @@ package diploma.logic.entities;
  */
 public class ObjectInstance {
 
-    private Integer id;
+    private Integer id, object_id;
     private String name;
 
     public ObjectInstance(){
 
     }
 
-    public ObjectInstance(Integer id, String name) {
+    public ObjectInstance(Integer id, Integer object_id,String name) {
         this.id = id;
+        this.object_id = object_id;
         this.name = name;
     }
 
@@ -23,6 +24,14 @@ public class ObjectInstance {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getObject_id() {
+        return object_id;
+    }
+
+    public void setObject_id(Integer object_id) {
+        this.object_id = object_id;
     }
 
     public String getName() {

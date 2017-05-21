@@ -10,4 +10,6 @@ import java.util.List;
 public interface ObjectInstanceRepo extends Repo<ObjectInstance> {
 
     List<ObjectInstance> getAllObjectInstanceList();
+
+    List<ObjectInstance> findByObjId(Integer id);
 }

@@ -16,7 +16,6 @@ public class ObjMapper implements RowMapper<Obj> {
             Obj object = new Obj();
             object.setId(rs.getInt("object_id"));
             object.setSubjectDomainId(rs.getInt("sd_id"));
-            object.setObjectInstanceId(rs.getInt("object_instance_id"));
             object.setName(rs.getString("obj_name"));
             return object;
         }

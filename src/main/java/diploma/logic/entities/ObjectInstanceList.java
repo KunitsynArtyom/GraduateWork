@@ -16,11 +16,11 @@ public class ObjectInstanceList {
         this.objectInstanceId = objectInstanceId;
     }
 
-    public Integer getId() {
+    public Integer getConnectionInstanceId() {
         return connectionInstanceId;
     }
 
-    public void setId(Integer connectionInstanceId) {
+    public void setConnectionInstanceId(Integer connectionInstanceId) {
         this.connectionInstanceId = connectionInstanceId;
     }
 

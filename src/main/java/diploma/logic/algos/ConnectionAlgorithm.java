@@ -9,35 +9,33 @@ import java.util.*;
  */
 public class ConnectionAlgorithm {
 
-    private Set<Connection> connectionSet;
-    private List<List<ConnectionInstance>> connectionInstanceLists;
-    private List<MassProblem> massProblemList;
-    private Map<Connection, Set<ConnectionInstance>> groupedConnectionInstances;
-    private Map<Connection, Double> stability;
-    private Map<Connection, Double> inevitability;
-    private Map<MassProblem, List<List<ConnectionInstance>>> groupedMassProblems;
-    private Map<MassProblem, Map<Connection, Set<ConnectionInstance>>> groupedMassProblemsConnections;
-    private HashMap<MassProblem, Map<Connection, Double>> createProbability;
-    private HashMap<MassProblem, Map<Connection, Double>> destroyProbability;
+    private Set<AlgoConnection> connectionSet;
+    private List<List<AlgoConnectionInstance>> connectionInstanceLists;
+    private List<AlgoMassProblem> massProblemList;
+    private Map<AlgoConnection, Set<AlgoConnectionInstance>> groupedConnectionInstances;
+    private Map<AlgoConnection, Double> stability, inevitability;
+    private Map<AlgoMassProblem, List<List<AlgoConnectionInstance>>> groupedMassProblems;
+    private Map<AlgoMassProblem, Map<AlgoConnection, Set<AlgoConnectionInstance>>> groupedMassProblemsConnections;
+    private Map<AlgoMassProblem, Map<AlgoConnection, Double>> createProbability, destroyProbability;
 
     public ConnectionAlgorithm(){
-        connectionSet = new HashSet<Connection>();
-        connectionInstanceLists = new ArrayList<List<ConnectionInstance>>();
-        groupedConnectionInstances = new HashMap<Connection, Set<ConnectionInstance>>();
-        stability = new HashMap<Connection, Double>();
-        inevitability = new HashMap<Connection, Double>();
-        massProblemList = new ArrayList<MassProblem>();
-        groupedMassProblems = new HashMap<MassProblem, List<List<ConnectionInstance>>>();
-        groupedMassProblemsConnections = new HashMap<MassProblem, Map<Connection, Set<ConnectionInstance>>>();
-        createProbability = new HashMap<MassProblem, Map<Connection, Double>>();
-        destroyProbability = new HashMap<MassProblem, Map<Connection, Double>>();
+        connectionSet = new LinkedHashSet<AlgoConnection>();
+        connectionInstanceLists = new ArrayList<List<AlgoConnectionInstance>>();
+        groupedConnectionInstances = new LinkedHashMap<AlgoConnection, Set<AlgoConnectionInstance>>();
+        stability = new LinkedHashMap<AlgoConnection, Double>();
+        inevitability = new LinkedHashMap<AlgoConnection, Double>();
+        massProblemList = new ArrayList<AlgoMassProblem>();
+        groupedMassProblems = new LinkedHashMap<AlgoMassProblem, List<List<AlgoConnectionInstance>>>();
+        groupedMassProblemsConnections = new LinkedHashMap<AlgoMassProblem, Map<AlgoConnection, Set<AlgoConnectionInstance>>>();
+        createProbability = new LinkedHashMap<AlgoMassProblem, Map<AlgoConnection, Double>>();
+        destroyProbability = new LinkedHashMap<AlgoMassProblem, Map<AlgoConnection, Double>>();
     }
 
-    public void calculate(Set<Connection> connectionSet,
-                          List<List<ConnectionInstance>> connectionInstanceSet,
-                          List<MassProblem> massProblemList){
+    public void calculate(Set<AlgoConnection> connectionSet,
+                          List<List<AlgoConnectionInstance>> connectionInstanceLists,
+                          List<AlgoMassProblem> massProblemList){
         this.connectionSet = connectionSet;
-        this.connectionInstanceLists = connectionInstanceSet;
+        this.connectionInstanceLists = connectionInstanceLists;
         this.massProblemList = massProblemList;
 
         groupByConnection();
@@ -48,18 +46,18 @@ public class ConnectionAlgorithm {
     }
 
     private void groupByConnection(){
-        for(Connection connection : connectionSet){
+        for(AlgoConnection connection : connectionSet){
             groupedConnectionInstances.put(connection, findByConnection(connection));
         }
     }
 
-    private Set<ConnectionInstance> findByConnection(Connection connection){
-        Set<ConnectionInstance> groupedConnectionInstanceSet = new HashSet<ConnectionInstance>();
+    private Set<AlgoConnectionInstance> findByConnection(AlgoConnection connection){
+        Set<AlgoConnectionInstance> groupedConnectionInstanceSet = new LinkedHashSet<AlgoConnectionInstance>();
 
-        for(List<ConnectionInstance> list : connectionInstanceLists) {
-            for (ConnectionInstance connectionInstance : list) {
-                if (connection.getObj1().getObjectInstanceList().contains(new ObjInstance(connectionInstance.getField1())) &&
-                        connection.getObj2().getObjectInstanceList().contains(new ObjInstance(connectionInstance.getField2()))) {
+        for(List<AlgoConnectionInstance> list : connectionInstanceLists) {
+            for (AlgoConnectionInstance connectionInstance : list) {
+                if (connection.getObj1().getObjectInstanceList().contains(new AlgoObjInstance(connectionInstance.getField1())) &&
+                        connection.getObj2().getObjectInstanceList().contains(new AlgoObjInstance(connectionInstance.getField2()))) {
                     groupedConnectionInstanceSet.add(connectionInstance);
                 }
             }
@@ -69,39 +67,39 @@ public class ConnectionAlgorithm {
     }
 
     private void calculateStability(){
-        Set<ConnectionInstance> connectionInstanceSet;
+        Set<AlgoConnectionInstance> connectionInstanceSet;
         for(Map.Entry entry : groupedConnectionInstances.entrySet()){
             int n = 0, m = 0;
             connectionInstanceSet = (Set)entry.getValue();
 
-            for(ConnectionInstance connectionInstance : connectionInstanceSet){
+            for(AlgoConnectionInstance connectionInstance : connectionInstanceSet){
                 n += findRepeatsByConnectionInstance(connectionInstance);
                 m += findLinkedRepeatsByConnectionInstance(connectionInstance);
             }
 
-            stability.put((Connection)entry.getKey(), (double)m/n);
+            stability.put((AlgoConnection)entry.getKey(), (double)m/n);
         }
     }
 
     private void calculateInevitability(){
-        Set<ConnectionInstance> connectionInstanceSet;
+        Set<AlgoConnectionInstance> connectionInstanceSet;
         for(Map.Entry entry : groupedConnectionInstances.entrySet()){
             int n = 0, m = 0;
             connectionInstanceSet = (Set)entry.getValue();
 
-            for(ConnectionInstance connectionInstance : connectionInstanceSet){
+            for(AlgoConnectionInstance connectionInstance : connectionInstanceSet){
                 n += findRepeatsByConnectionInstance(connectionInstance);
                 m += findEmergenceByConnectionInstance(connectionInstance);
             }
 
-            inevitability.put((Connection)entry.getKey(), (double)m/n);
+            inevitability.put((AlgoConnection)entry.getKey(), (double)m/n);
         }
     }
 
-    private int findRepeatsByConnectionInstance(ConnectionInstance connectionInstance){
+    private int findRepeatsByConnectionInstance(AlgoConnectionInstance connectionInstance){
         int n = 0;
 
-        for(List<ConnectionInstance> list : connectionInstanceLists){
+        for(List<AlgoConnectionInstance> list : connectionInstanceLists){
             if(list.contains(connectionInstance)){
                 n++;
             }
@@ -110,11 +108,11 @@ public class ConnectionAlgorithm {
         return n;
     }
 
-    private int findLinkedRepeatsByConnectionInstance(ConnectionInstance connectionInstance){
+    private int findLinkedRepeatsByConnectionInstance(AlgoConnectionInstance connectionInstance){
         int m = 0;
         boolean repeatFlag = false;
 
-        for(List<ConnectionInstance> list : connectionInstanceLists){
+        for(List<AlgoConnectionInstance> list : connectionInstanceLists){
             if(list.contains(connectionInstance)){
                 if(repeatFlag){
                     m++;
@@ -126,11 +124,11 @@ public class ConnectionAlgorithm {
         return m;
     }
 
-    private int findEmergenceByConnectionInstance(ConnectionInstance connectionInstance){
+    private int findEmergenceByConnectionInstance(AlgoConnectionInstance connectionInstance){
         int m = 0;
         boolean repeatFlag = false;
 
-        for(List<ConnectionInstance> list : connectionInstanceLists){
+        for(List<AlgoConnectionInstance> list : connectionInstanceLists){
             if(list.contains(connectionInstance)){
                 if(!repeatFlag){
                     m++;
@@ -140,6 +138,155 @@ public class ConnectionAlgorithm {
         }
 
         return m;
+    }
+
+    public void calculateMassProblemsScales(){
+        groupConnectionInstancesByMassProblems();
+        groupConnectionsByMassProblems();
+        calculateCreateProbability();
+    }
+
+    private void groupConnectionInstancesByMassProblems(){
+        for(AlgoMassProblem massProblem : massProblemList){
+            groupedMassProblems.put(massProblem, getConnectionInstancePairList(massProblem));
+        }
+    }
+
+    private void groupConnectionsByMassProblems(){
+        for(AlgoMassProblem massProblem : massProblemList){
+            groupedMassProblemsConnections.put(massProblem, groupMassProblemConnectionInstancesByConnection(massProblem));
+        }
+    }
+
+    private List<List<AlgoConnectionInstance>> getConnectionInstancePairList(AlgoMassProblem massProblem){
+        List<List<AlgoConnectionInstance>> massProblemConnectionInstanceList = new ArrayList<List<AlgoConnectionInstance>>();
+
+        for(int i = 0; i < massProblemList.size(); i++){
+            if(massProblemList.get(i) == massProblem){
+                massProblemConnectionInstanceList.add(connectionInstanceLists.get(i));
+                massProblemConnectionInstanceList.add(connectionInstanceLists.get(i + 1));
+            }
+        }
+
+        return massProblemConnectionInstanceList;
+    }
+
+    private Map<AlgoConnection, Set<AlgoConnectionInstance>> groupMassProblemConnectionInstancesByConnection(AlgoMassProblem massProblem){
+        Map<AlgoConnection, Set<AlgoConnectionInstance>> groupedMassProblemConnectionInstances = new LinkedHashMap<AlgoConnection, Set<AlgoConnectionInstance>>();
+
+        for(Map.Entry entry : groupedMassProblems.entrySet()){
+            if(entry.getKey() == massProblem){
+                for(AlgoConnection connection : connectionSet){
+                    groupedMassProblemConnectionInstances.put(connection, findByConnection(connection, (List<List<AlgoConnectionInstance>>)entry.getValue()));
+                }
+            }
+        }
+
+        return groupedMassProblemConnectionInstances;
+    }
+
+    private Set<AlgoConnectionInstance> findByConnection(AlgoConnection connection, List<List<AlgoConnectionInstance>> massProblemConnectionInstancesList){
+        Set<AlgoConnectionInstance> connectionInstances = new LinkedHashSet<AlgoConnectionInstance>();
+
+        for(List<AlgoConnectionInstance> list : massProblemConnectionInstancesList){
+            for(AlgoConnectionInstance connectionInstance : list){
+                if (connection.getObj1().getObjectInstanceList().contains(new AlgoObjInstance(connectionInstance.getField1())) &&
+                        connection.getObj2().getObjectInstanceList().contains(new AlgoObjInstance(connectionInstance.getField2()))) {
+                    connectionInstances.add(connectionInstance);
+                }
+            }
+        }
+
+        return connectionInstances;
+    }
+
+    private void calculateCreateProbability(){
+        Map<AlgoConnection, Set<AlgoConnectionInstance>> groupedConnectionInstanceMap;
+
+        for(Map.Entry entry : groupedMassProblemsConnections.entrySet()){
+            groupedConnectionInstanceMap = (Map<AlgoConnection, Set<AlgoConnectionInstance>>)entry.getValue();
+            List<List<AlgoConnectionInstance>> connInstanceLists = groupedMassProblems.get(entry.getKey());
+            createProbability.put((AlgoMassProblem)entry.getKey(), calculateMassProblemCreateProbability(connInstanceLists, groupedConnectionInstanceMap));
+            destroyProbability.put((AlgoMassProblem)entry.getKey(), calculateMassProblemDestroyProbability(connInstanceLists, groupedConnectionInstanceMap));
+        }
+    }
+
+    private Map<AlgoConnection, Double> calculateMassProblemCreateProbability(List<List<AlgoConnectionInstance>> connInstanceLists,
+                                                                              Map<AlgoConnection, Set<AlgoConnectionInstance>>  connConnectionInstanceSet){
+        Map<AlgoConnection, Double> connectionValueMap = new LinkedHashMap<AlgoConnection, Double>();
+
+        for(Map.Entry entry : connConnectionInstanceSet.entrySet()){
+            int j = 0, k = 0;
+            for(AlgoConnectionInstance connInstance : (Set<AlgoConnectionInstance>)entry.getValue()){
+                int m = 0, n = 0;
+                boolean repeatFlag = false;
+                for(int i = 0; i < connInstanceLists.size(); i++){
+                    if(connInstanceLists.get(i).contains(connInstance)){
+                        if(!repeatFlag){
+                            if(i != 0){
+                                m++;
+                            }
+                        }
+                        repeatFlag = true;
+                    } else repeatFlag = false;
+                    n++;
+                }
+                j += m;
+                k += n;
+            }
+
+            connectionValueMap.put((AlgoConnection)entry.getKey(), (double)j/k);
+        }
+
+        return connectionValueMap;
+    }
+
+    private Map<AlgoConnection, Double> calculateMassProblemDestroyProbability(List<List<AlgoConnectionInstance>> connInstanceLists,
+                                                                               Map<AlgoConnection, Set<AlgoConnectionInstance>>  connConnectionInstanceSet) {
+        Map<AlgoConnection, Double> connectionValueMap = new LinkedHashMap<AlgoConnection, Double>();
+
+        for(Map.Entry entry : connConnectionInstanceSet.entrySet()){
+            int j = 0, k = 0;
+            for(AlgoConnectionInstance connInstance : (Set<AlgoConnectionInstance>)entry.getValue()){
+                int m = 0, n = 0;
+                boolean repeatFlag = false;
+                for(int i = 0; i < connInstanceLists.size(); i++){
+                    if(connInstanceLists.get(i).contains(connInstance)){
+                        repeatFlag = true;
+                    } else {
+                        if(repeatFlag){
+                            if(i != 0){
+                                m++;
+                            }
+                            repeatFlag = false;
+                        }
+                    }
+                    n++;
+                }
+                j += m;
+                k += n;
+            }
+
+            connectionValueMap.put((AlgoConnection)entry.getKey(), (double)j/k);
+        }
+
+        return connectionValueMap;
+    }
+
+    public Map<AlgoConnection, Double> getStability(){
+        return stability;
+    }
+
+    public Map<AlgoConnection, Double> getInevitability(){
+        return inevitability;
+    }
+
+    public Map<AlgoMassProblem, Map<AlgoConnection, Double>> getCreateProbability(){
+        return createProbability;
+    }
+
+    public Map<AlgoMassProblem, Map<AlgoConnection, Double>> getDestroyProbability(){
+        return destroyProbability;
     }
 
     private void showStat(){
@@ -156,7 +303,7 @@ public class ConnectionAlgorithm {
         System.out.println("Mass Problems");
         for(Map.Entry entry : groupedMassProblemsConnections.entrySet()){
             System.out.println(entry.getKey());
-            Map<Connection, Set<ConnectionInstance>> temporaryMap = (Map<Connection, Set<ConnectionInstance>>)entry.getValue();
+            Map<AlgoConnection, Set<AlgoConnectionInstance>> temporaryMap = (Map<AlgoConnection, Set<AlgoConnectionInstance>>)entry.getValue();
 
             for(Map.Entry innerEntry : temporaryMap.entrySet()){
                 System.out.println("Key: " + "'" + innerEntry.getKey() + "'"  + " Value: " + "'" + innerEntry.getValue() + "'");
@@ -184,145 +331,5 @@ public class ConnectionAlgorithm {
                 System.out.println("Key: " + "'" + destroyProbEntry.getKey() + "'"  + " Value: " + "'" + destroyProbEntry.getValue() + "'");
             }
         }
-    }
-
-
-
-
-    public void calculateMassProblemsScales(){
-        groupConnectionInstancesByMassProblems();
-        groupConnectionsByMassProblems();
-        calculateCreateProbability();
-    }
-
-    private void groupConnectionInstancesByMassProblems(){
-        for(MassProblem massProblem : massProblemList){
-            groupedMassProblems.put(massProblem, getConnectionInstancePairList(massProblem));
-        }
-    }
-
-    private void groupConnectionsByMassProblems(){
-        for(MassProblem massProblem : massProblemList){
-            groupedMassProblemsConnections.put(massProblem, groupMassProblemConnectionInstancesByConnection(massProblem));
-        }
-    }
-
-    private List<List<ConnectionInstance>> getConnectionInstancePairList(MassProblem massProblem){
-        List<List<ConnectionInstance>> massProblemConnectionInstanceList = new ArrayList<List<ConnectionInstance>>();
-
-        for(int i = 0; i < massProblemList.size(); i++){
-            if(massProblemList.get(i) == massProblem){
-                massProblemConnectionInstanceList.add(connectionInstanceLists.get(i));
-                massProblemConnectionInstanceList.add(connectionInstanceLists.get(i + 1));
-            }
-        }
-
-        return massProblemConnectionInstanceList;
-    }
-
-    private Map<Connection, Set<ConnectionInstance>> groupMassProblemConnectionInstancesByConnection(MassProblem massProblem){
-        Map<Connection, Set<ConnectionInstance>> groupedMassProblemConnectionInstances = new HashMap<Connection, Set<ConnectionInstance>>();
-
-        for(Map.Entry entry : groupedMassProblems.entrySet()){
-            if(entry.getKey() == massProblem){
-                for(Connection connection : connectionSet){
-                    groupedMassProblemConnectionInstances.put(connection, findByConnection(connection, (List<List<ConnectionInstance>>)entry.getValue()));
-                }
-            }
-        }
-
-        return groupedMassProblemConnectionInstances;
-    }
-
-    private Set<ConnectionInstance> findByConnection(Connection connection, List<List<ConnectionInstance>> massProblemConnectionInstancesList){
-        Set<ConnectionInstance> connectionInstances = new HashSet<ConnectionInstance>();
-
-        for(List<ConnectionInstance> list : massProblemConnectionInstancesList){
-            for(ConnectionInstance connectionInstance : list){
-                if (connection.getObj1().getObjectInstanceList().contains(new ObjInstance(connectionInstance.getField1())) &&
-                        connection.getObj2().getObjectInstanceList().contains(new ObjInstance(connectionInstance.getField2()))) {
-                    connectionInstances.add(connectionInstance);
-                }
-            }
-        }
-
-        return connectionInstances;
-    }
-
-    public Map<MassProblem, Map<Connection, Double>> getCreateProbability(){
-        return createProbability;
-    }
-
-    private void calculateCreateProbability(){
-        Map<Connection, Set<ConnectionInstance>> groupedConnectionInstanceMap;
-
-        for(Map.Entry entry : groupedMassProblemsConnections.entrySet()){
-            groupedConnectionInstanceMap = (Map<Connection, Set<ConnectionInstance>>)entry.getValue();
-            List<List<ConnectionInstance>> connInstanceLists = groupedMassProblems.get(entry.getKey());
-            createProbability.put((MassProblem)entry.getKey(), calculateMassProblemCreateProbability(connInstanceLists, groupedConnectionInstanceMap));
-            destroyProbability.put((MassProblem)entry.getKey(), calculateMassProblemDestroyProbability(connInstanceLists, groupedConnectionInstanceMap));
-        }
-    }
-
-    private Map<Connection, Double> calculateMassProblemCreateProbability(List<List<ConnectionInstance>> connInstanceLists,
-                                                                          Map<Connection, Set<ConnectionInstance>>  connConnectionInstanceSet){
-        Map<Connection, Double> connectionValueMap = new HashMap<Connection, Double>();
-
-        for(Map.Entry entry : connConnectionInstanceSet.entrySet()){
-            int j = 0, k = 0;
-            for(ConnectionInstance connInstance : (Set<ConnectionInstance>)entry.getValue()){
-                int m = 0, n = 0;
-                boolean repeatFlag = false;
-                for(int i = 0; i < connInstanceLists.size(); i++){
-                    if(connInstanceLists.get(i).contains(connInstance)){
-                        if(!repeatFlag){
-                            if(i != 0){
-                                m++;
-                            }
-                        }
-                        repeatFlag = true;
-                    } else repeatFlag = false;
-                    n++;
-                }
-                j += m;
-                k += n;
-            }
-
-            connectionValueMap.put((Connection)entry.getKey(), (double)j/k);
-        }
-
-        return connectionValueMap;
-    }
-
-    private Map<Connection, Double> calculateMassProblemDestroyProbability(List<List<ConnectionInstance>> connInstanceLists,
-                                                                           Map<Connection, Set<ConnectionInstance>>  connConnectionInstanceSet) {
-        Map<Connection, Double> connectionValueMap = new HashMap<Connection, Double>();
-
-        for(Map.Entry entry : connConnectionInstanceSet.entrySet()){
-            int j = 0, k = 0;
-            for(ConnectionInstance connInstance : (Set<ConnectionInstance>)entry.getValue()){
-                int m = 0, n = 0;
-                boolean repeatFlag = false;
-                for(int i = 0; i < connInstanceLists.size(); i++){
-                    if(connInstanceLists.get(i).contains(connInstance)){
-                        repeatFlag = true;
-                    } else {
-                        if(repeatFlag){
-                            if(i != 0){
-                                m++;
-                            }
-                            repeatFlag = false;
-                        }
-                    }
-                    n++;
-                }
-                j += m;
-                k += n;
-            }
-
-            connectionValueMap.put((Connection)entry.getKey(), (double)j/k);
-        }
-
-        return connectionValueMap;
     }
 }

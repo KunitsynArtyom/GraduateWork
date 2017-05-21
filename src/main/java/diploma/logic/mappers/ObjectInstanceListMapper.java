@@ -12,7 +12,7 @@ public class ObjectInstanceListMapper implements RowMapper<ObjectInstanceList> {
 
     public ObjectInstanceList mapRow(ResultSet rs, int rowNum) throws SQLException {
         ObjectInstanceList objectInstanceList = new ObjectInstanceList();
-        objectInstanceList.setId(rs.getInt("connection_instance_id"));
+        objectInstanceList.setConnectionInstanceId(rs.getInt("connection_instance_id"));
         objectInstanceList.setObjectInstanceId(rs.getInt("object_instance_id"));
         return objectInstanceList;
     }

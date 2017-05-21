@@ -14,6 +14,7 @@ public class ObjectInstanceMapper implements RowMapper<ObjectInstance> {
     public ObjectInstance mapRow(ResultSet rs, int rowNum) throws SQLException {
         ObjectInstance objectInstance = new ObjectInstance();
         objectInstance.setId(rs.getInt("object_instance_id"));
+        objectInstance.setObject_id(rs.getInt("object_id"));
         objectInstance.setName(rs.getString("object_instance_name"));
         return objectInstance;
     }

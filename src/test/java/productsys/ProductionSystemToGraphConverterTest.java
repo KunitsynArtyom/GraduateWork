@@ -91,10 +91,10 @@ public class ProductionSystemToGraphConverterTest {
         List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
 
         try {
-            Implication<QueryAttribute> implication1 = new Implication(arguments1, results1);
-            implicationList.add(implication1);
-            Implication<QueryAttribute> implication2 = new Implication(arguments2, results2);
-            implicationList.add(implication2);
+//            Implication<QueryAttribute> implication1 = new Implication(arguments1, results1);
+//            implicationList.add(implication1);
+//            Implication<QueryAttribute> implication2 = new Implication(arguments2, results2);
+//            implicationList.add(implication2);
         } catch (Exception ex) { }
 
         if(!implicationList.isEmpty()){

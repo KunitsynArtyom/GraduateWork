@@ -13,7 +13,7 @@ public class ConnectionInstanceMapper implements RowMapper<ConnectionInstance> {
     public ConnectionInstance mapRow(ResultSet rs, int rowNum) throws SQLException {
         ConnectionInstance connectionInstance = new ConnectionInstance();
         connectionInstance.setId(rs.getInt("connection_instance_id"));
-        connectionInstance.setObjectInstanceId(rs.getInt("object_instance_id"));
+        connectionInstance.setConnectionId(rs.getInt("connection_id"));
         connectionInstance.setName(rs.getString("connection_instance_name"));
         return connectionInstance;
     }

@@ -5,15 +5,15 @@ import java.util.List;
 /**
  * Created by Артём on 09.04.2017.
  */
-public class Obj {
+public class AlgoObj {
     private String name;
-    private List<ObjInstance> objectInstanceList;
+    private List<AlgoObjInstance> objectInstanceList;
 
-    public Obj(String name) {
+    public AlgoObj(String name) {
         this.name = name;
     }
 
-    public Obj(String name, List<ObjInstance> objectInstanceList) {
+    public AlgoObj(String name, List<AlgoObjInstance> objectInstanceList) {
         this.name = name;
         this.objectInstanceList = objectInstanceList;
     }
@@ -22,11 +22,11 @@ public class Obj {
         return name;
     }
 
-    public List<ObjInstance> getObjectInstanceList() {
+    public List<AlgoObjInstance> getObjectInstanceList() {
         return objectInstanceList;
     }
 
-    public void setObjectInstanceList(List<ObjInstance> objectInstanceList) {
+    public void setObjectInstanceList(List<AlgoObjInstance> objectInstanceList) {
         this.objectInstanceList = objectInstanceList;
     }
 

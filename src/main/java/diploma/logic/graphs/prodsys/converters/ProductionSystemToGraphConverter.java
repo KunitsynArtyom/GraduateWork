@@ -33,14 +33,32 @@ public class ProductionSystemToGraphConverter {
     }
 
     private void addConnectionsFromImplication(Implication<QueryAttribute> implication) throws Exception {
-        Collection<QueryAttribute> results = implication.getResult();
-        Collection<QueryAttribute> arguments = implication.getArguments();
+        Collection<QueryAttribute> innerResults = implication.getInnerResults();
+        Collection<QueryAttribute> outerResults = implication.getOuterResults();
+        Collection<QueryAttribute> innerArguments = implication.getInnerArguments();
+        Collection<QueryAttribute> outerArguments = implication.getOuterArguments();
 
-        for(QueryAttribute result : results) {
-            Vertex<QueryAttribute> resultVertex = createOrGetVertexFromGraph(result);
+        for(QueryAttribute innerArgument : innerArguments) {
+            Vertex<QueryAttribute> resultVertex = createOrGetVertexFromGraph(innerArgument);
 
-            for (QueryAttribute argument : arguments) {
-                createConnectionIfNeeded(resultVertex, argument);
+            for (QueryAttribute outerArgument : outerArguments) {
+                createConnectionIfNeeded(resultVertex, outerArgument);
+            }
+        }
+
+        for(QueryAttribute innerResult : innerResults) {
+            Vertex<QueryAttribute> resultVertex = createOrGetVertexFromGraph(innerResult);
+
+            for (QueryAttribute innerArgument : innerArguments) {
+                createConnectionIfNeeded(resultVertex, innerArgument);
+            }
+        }
+
+        for(QueryAttribute outerResult : outerResults) {
+            Vertex<QueryAttribute> resultVertex = createOrGetVertexFromGraph(outerResult);
+
+            for (QueryAttribute innerResult : innerResults) {
+                createConnectionIfNeeded(resultVertex, innerResult);
             }
         }
 

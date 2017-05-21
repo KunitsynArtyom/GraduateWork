@@ -3,16 +3,16 @@ package diploma.logic.algos.entities;
 /**
  * Created by Артём on 09.04.2017.
  */
-public class ConnectionInstance implements Comparable<ConnectionInstance>  {
+public class AlgoConnectionInstance implements Comparable<AlgoConnectionInstance>  {
     private String field1, field2, name;
 
-    public ConnectionInstance(String field1, String field2) {
+    public AlgoConnectionInstance(String field1, String field2) {
         this.field1 = field1;
         this.field2 = field2;
         this.name = toString();
     }
 
-    public int compareTo(ConnectionInstance o) {
+    public int compareTo(AlgoConnectionInstance o) {
         return this.getName().compareTo(o.getName());
     }
 
@@ -22,11 +22,11 @@ public class ConnectionInstance implements Comparable<ConnectionInstance>  {
             return true;
         }
 
-        if (!(other instanceof ConnectionInstance)) {
+        if (!(other instanceof AlgoConnectionInstance)) {
             return false;
         }
 
-        ConnectionInstance otherConnectionInstance = (ConnectionInstance) other;
+        AlgoConnectionInstance otherConnectionInstance = (AlgoConnectionInstance) other;
 
         return this.getName().equals(otherConnectionInstance.getName()) && this.getField1().equals(otherConnectionInstance.getField1()) && this.getField2().equals(otherConnectionInstance.getField2());
     }

@@ -12,4 +12,6 @@ public interface ConnectionRepo extends Repo<Connection> {
     List<Connection> getAllConnectionList();
 
     List<Connection> findBySDId(Integer id);
+
+    List<String> getAllDistinctSDList();
 }

@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -29,5 +30,12 @@ public class ConnectionInstanceController {
         List<ConnectionInstance> connectionInstanceList = repo.getAllConnectionInstanceList();
         model.addAttribute("connectionInstanceList", connectionInstanceList);
         return "connectionInstances";
+    }
+
+    @RequestMapping("/{id}")
+    public String showInfo(Model model, @PathVariable("id") Integer id){
+        ConnectionInstanceRepo connectionInstanceRepo = context.getBean(ConnectionInstanceRepo.class);
+        model.addAttribute("connectionInstance", connectionInstanceRepo.findById(id));
+        return "info/connectionInstanceInfo";
     }
 }

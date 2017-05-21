@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
-
 /**
  * Created by Артём on 19.02.2017.
  */
@@ -21,6 +20,7 @@ public class ConnectionRepoImpl implements ConnectionRepo {
     private static final String GET_ALL_CONN_LIST = "SELECT * FROM \"public\".\"connection\"";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM \"public\".\"connection\" WHERE connection_id = ?";
     private static final String FIND_ID_BY_SD_ID_QUERY = "SELECT * FROM \"public\".\"connection\" WHERE sd_id = ?";
+    private static final String GET_ALL_DISTINCT_SD_LIST = "SELECT DISTINCT sd_id FROM \"public\".\"connection\"";
 
     @Autowired
     public ConnectionRepoImpl(DataSource dataSource){
@@ -37,5 +37,9 @@ public class ConnectionRepoImpl implements ConnectionRepo {
 
     public List<Connection> findBySDId(Integer id){
         return this.template.query(FIND_ID_BY_SD_ID_QUERY, new Object[] {id}, new ConnectionMapper());
+    }
+
+    public List<String> getAllDistinctSDList(){
+        return this.template.queryForList(GET_ALL_DISTINCT_SD_LIST, String.class);
     }
 }

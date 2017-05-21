@@ -20,6 +20,7 @@ public class ObjectListRepoImpl implements ObjectListRepo {
 
     private static final String GET_ALL_OBJ_LISTS_LIST = "SELECT * FROM \"public\".\"object_list\"";
     private static final String FIND_OBJ_LISTS_BY_OBJ_ID = "SELECT * FROM \"public\".\"object_list\" WHERE object_id = ?";
+    private static final String FIND_OBJ_LISTS_BY_CONN_ID = "SELECT * FROM \"public\".\"object_list\" WHERE connection_id = ?";
 
     @Autowired
     public ObjectListRepoImpl(DataSource dataSource){
@@ -32,6 +33,10 @@ public class ObjectListRepoImpl implements ObjectListRepo {
 
     public List<ObjectList> findByObjId(Integer id){
         return this.template.query(FIND_OBJ_LISTS_BY_OBJ_ID, new Object[] {id}, new ObjectListMapper());
+    }
+
+    public List<ObjectList> findByConnId(Integer id){
+        return this.template.query(FIND_OBJ_LISTS_BY_CONN_ID, new Object[] {id}, new ObjectListMapper());
     }
 
     public ObjectList findById(Integer id){

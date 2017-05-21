@@ -12,6 +12,4 @@ public interface ObjRepo extends Repo<Obj>{
     List<Obj> getAllObjList();
 
     List<Obj> findBySDId(Integer id);
-
-    List<Obj> findByObjInstanceId(Integer id);
 }

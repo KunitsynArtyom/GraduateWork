@@ -1,6 +1,7 @@
 package diploma.logic.algos.services;
 
 import diploma.logic.algos.AcyclicDownTopAlgorithm;
+import diploma.logic.entities.MassProblem;
 import diploma.logic.graphs.Graph;
 import diploma.logic.graphs.Vertex;
 import diploma.logic.graphs.VertexConnection;
@@ -8,6 +9,8 @@ import diploma.logic.graphs.prodsys.converters.ProductionSystemToGraphConverter;
 import diploma.logic.graphs.prodsys.entities.DefiningAttribute;
 import diploma.logic.graphs.prodsys.entities.Implication;
 import diploma.logic.graphs.prodsys.entities.ProductionSystem;
+import diploma.logic.parsers.SQLFunctionParser;
+import diploma.logic.parsers.SQLParser;
 import diploma.logic.parsers.entities.QueryAttribute;
 
 import java.util.ArrayList;
@@ -64,5 +67,20 @@ public class AcyclicDownTopAlgorithmService {
         }
         initializeVertexList();
         initializeVertexConnectionList();
+    }
+
+    public static List<Implication<QueryAttribute>> createImplicationList(List<MassProblem> massProblemList){
+        List<List<String>> parsedFunctionQueryList = new ArrayList<List<String>>();
+        List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
+
+        for (MassProblem massProblem : massProblemList) {
+            parsedFunctionQueryList.add(new SQLFunctionParser(massProblem.getName()).parseSQLFunction());
+        }
+
+        for (List<String> list : parsedFunctionQueryList) {
+            implicationList.add(new SQLParser(list).getImplication());
+        }
+
+        return implicationList;
     }
 }

@@ -3,14 +3,14 @@ package diploma.logic.algos.entities;
 /**
  * Created by Артём on 09.04.2017.
  */
-public class ObjInstance implements Comparable<ObjInstance> {
+public class AlgoObjInstance implements Comparable<AlgoObjInstance> {
     private String name;
 
-    public ObjInstance(String name) {
+    public AlgoObjInstance(String name) {
         this.name = name;
     }
 
-    public int compareTo(ObjInstance o){
+    public int compareTo(AlgoObjInstance o){
         return this.getName().compareTo(o.getName());
     }
 
@@ -20,11 +20,11 @@ public class ObjInstance implements Comparable<ObjInstance> {
             return true;
         }
 
-        if (!(other instanceof ObjInstance)) {
+        if (!(other instanceof AlgoObjInstance)) {
             return false;
         }
 
-        ObjInstance otherObjInstance = (ObjInstance) other;
+        AlgoObjInstance otherObjInstance = (AlgoObjInstance) other;
 
         return this.getName().equals(otherObjInstance.getName());
     }

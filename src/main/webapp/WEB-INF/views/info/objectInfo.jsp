@@ -1,12 +1,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Subject Domain Info</title>
+    <title>Object Info</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -30,10 +30,6 @@
         <a href="/subjectDomain/${object.subjectDomainId}"  class="list-group-item">
             <h4 class="list-group-item-heading">Subject Domain ID</h4>
             <p class="list-group-item-text">${object.subjectDomainId}</p>
-        </a>
-        <a href="/objectInstance/${object.objectInstanceId}" class="list-group-item">
-            <h4 class="list-group-item-heading">Object Instance Id</h4>
-            <p class="list-group-item-text">${object.objectInstanceId}</p>
         </a>
         <a class="list-group-item">
             <h4 class="list-group-item-heading">Object Name</h4>
@@ -63,24 +59,25 @@
                 </body>
             </table>
         </div>
+
+        <div class="container">
+
+            <h2>Object Lists</h2>
+            <table class="table table-hover table-bordered">
+                <body>
+                <tr>
+                    <th>Connection Id</th>
+                </tr>
+                <c:forEach items="${objectListsList}" var="objectList">
+                    <tr>
+                        <td><a href="<spring:url value="/connection/${objectList.connectionId}"/>"><c:out value="${objectList.connectionId}" /></a></td>
+                    </tr>
+                </c:forEach>
+                </body>
+            </table>
+        </div>
+
     </div>
-</div>
-
-<div class="container">
-
-    <h2>Object Lists</h2>
-    <table class="table table-hover table-bordered">
-        <body>
-        <tr>
-            <th>Connection Id</th>
-        </tr>
-        <c:forEach items="${objectListsList}" var="objectList">
-            <tr>
-                <td><c:out value="${objectList.connectionId}" /></td>
-            </tr>
-        </c:forEach>
-        </body>
-    </table>
 </div>
 
 </body>

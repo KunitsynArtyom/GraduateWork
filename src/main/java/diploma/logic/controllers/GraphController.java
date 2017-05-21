@@ -38,39 +38,61 @@ public class GraphController {
         Graph graph;
         ProductionSystem<QueryAttribute> productionSystem;
 
-        ArrayList<QueryAttribute> arguments1 = new ArrayList<QueryAttribute>();
+        ArrayList<QueryAttribute> outerArguments1 = new ArrayList<QueryAttribute>();
+        QueryAttribute outerAttribute1 = new QueryAttribute("qwerty1");
+        QueryAttribute outerAttribute2 = new QueryAttribute("qwerty2");
+
+        outerArguments1.add(outerAttribute1);
+        outerArguments1.add(outerAttribute2);
+
+        ArrayList<QueryAttribute> innerArguments1 = new ArrayList<QueryAttribute>();
         QueryAttribute queryAttribute1 = new QueryAttribute("1");
         QueryAttribute queryAttribute2 = new QueryAttribute("2");
         QueryAttribute queryAttribute3 = new QueryAttribute("3");
 
-        arguments1.add(queryAttribute1);
-        arguments1.add(queryAttribute2);
-        arguments1.add(queryAttribute3);
+        innerArguments1.add(queryAttribute1);
+        innerArguments1.add(queryAttribute2);
+        innerArguments1.add(queryAttribute3);
 
         QueryAttribute queryResult11 = new QueryAttribute("4");
         QueryAttribute queryResult12 = new QueryAttribute("6");
-        ArrayList<QueryAttribute> results1 = new ArrayList<QueryAttribute>();
-        results1.add(queryResult11);
-        results1.add(queryResult12);
 
-        ArrayList<QueryAttribute> arguments2 = new ArrayList<QueryAttribute>();
+        ArrayList<QueryAttribute> innerResults1 = new ArrayList<QueryAttribute>();
+        innerResults1.add(queryResult11);
+        innerResults1.add(queryResult12);
+
+        ArrayList<QueryAttribute> outerResults1 = new ArrayList<QueryAttribute>();
+        QueryAttribute queryResult111 = new QueryAttribute("qwerty3");
+        outerResults1.add(queryResult111);
+
+        ArrayList<QueryAttribute> outerArguments2 = new ArrayList<QueryAttribute>();
+        QueryAttribute outerAttribute11 = new QueryAttribute("qwerty4");
+        outerArguments2.add(outerAttribute11);
+
+        ArrayList<QueryAttribute> innerArguments2 = new ArrayList<QueryAttribute>();
         QueryAttribute queryAttribute11 = new QueryAttribute("1");
         QueryAttribute queryAttribute12 = new QueryAttribute("3");
         QueryAttribute queryAttribute13 = new QueryAttribute("4");
-        arguments2.add(queryAttribute11);
-        arguments2.add(queryAttribute12);
-        arguments2.add(queryAttribute13);
+
+        innerArguments2.add(queryAttribute11);
+        innerArguments2.add(queryAttribute12);
+        innerArguments2.add(queryAttribute13);
 
         QueryAttribute queryResult2 = new QueryAttribute("5");
-        ArrayList<QueryAttribute> results2 = new ArrayList<QueryAttribute>();
-        results2.add(queryResult2);
+        ArrayList<QueryAttribute> innerResults2 = new ArrayList<QueryAttribute>();
+        innerResults2.add(queryResult2);
+
+        List<QueryAttribute> outerResults2 = new ArrayList<QueryAttribute>();
+
+        QueryAttribute outerResult2 = new QueryAttribute("qwerty5");
+        outerResults2.add(outerResult2);
 
         List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
 
         try {
-            Implication<QueryAttribute> implication1 = new Implication(arguments1, results1);
+            Implication<QueryAttribute> implication1 = new Implication(innerArguments1, outerArguments1, innerResults1, outerResults1);
             implicationList.add(implication1);
-            Implication<QueryAttribute> implication2 = new Implication(arguments2, results2);
+            Implication<QueryAttribute> implication2 = new Implication(innerArguments2, outerArguments2, innerResults2, outerResults2);
             implicationList.add(implication2);
         } catch (Exception ex) { }
 

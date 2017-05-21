@@ -1,5 +1,6 @@
 package diploma.logic.controllers;
 
+import diploma.logic.entities.ObjectInstance;
 import diploma.logic.entities.ObjectInstanceList;
 import diploma.logic.repositories.ObjectInstanceListRepo;
 import org.springframework.beans.factory.annotation.Autowired;

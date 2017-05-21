@@ -15,7 +15,9 @@ public class SQLFunctionParser {
 
     private Logger logger = Logger.getLogger(SQLFunctionParser.class);
 
-    private final String regex = "(?i)(select|update|insert|delete).+(?=;)";
+    private final String queryRegex = "(?i)(select|update|insert|delete).+(?=;)";
+    private final String functionHeaderRegex = "CREATE FUNCTION\\s+\\w+\\(((\\w+\\s+\\w+\\,?\\s*)*)\\)";
+    private final String returnStatementRegex = "(?i)return\\s(.+(?=;))";
     private String sqlFunctionText;
 
     public SQLFunctionParser(String sqlFunctionText) {
@@ -28,11 +30,38 @@ public class SQLFunctionParser {
         return sqlQueryList;
     }
 
-    private List<String> parse(String query) {
-        List<String> sqlQueryList = new ArrayList<>();
+    private List<String> parse(String sqlFunction) {
+        List<String> sqlLexList = new ArrayList<String>();
+
+        sqlLexList.add(parseFunctionHeader(sqlFunction));
+        sqlLexList.addAll(parseSQLQueries(sqlFunction));
+        sqlLexList.addAll(parseReturnStatement(sqlFunction));
+
+        return sqlLexList;
+    }
+
+    private String parseFunctionHeader(String sqlFunction) {
+        String functionHeader = "";
+
         try {
-            final Pattern pattern = Pattern.compile(regex);
-            final Matcher matcher = pattern.matcher(query);
+            Pattern pattern = Pattern.compile(functionHeaderRegex);
+            Matcher matcher = pattern.matcher(sqlFunction);
+            while (matcher.find()) {
+                functionHeader = matcher.group(1);
+            }
+        } catch (Exception e) {
+            logger.debug("Errors while parsing");
+        }
+
+        return functionHeader;
+    }
+
+    private List<String> parseSQLQueries(String sqlFunction) {
+        List<String> sqlQueryList = new ArrayList<String>();
+
+        try {
+            Pattern pattern = Pattern.compile(queryRegex);
+            Matcher matcher = pattern.matcher(sqlFunction);
             while (matcher.find()) {
                 sqlQueryList.addAll(Arrays.asList(matcher.group(0).split(";")));
             }
@@ -41,5 +70,21 @@ public class SQLFunctionParser {
         }
 
         return sqlQueryList;
+    }
+
+    private List<String> parseReturnStatement(String sqlFunction){
+        List<String> returnStatementList = new ArrayList<String>();
+
+        try{
+            Pattern pattern = Pattern.compile(returnStatementRegex);
+            Matcher matcher = pattern.matcher(sqlFunction);
+            while (matcher.find()) {
+                returnStatementList.addAll(Arrays.asList(matcher.group(0)));
+            }
+        } catch (Exception e) {
+            logger.debug("Errors while parsing");
+        }
+
+        return returnStatementList;
     }
 }
