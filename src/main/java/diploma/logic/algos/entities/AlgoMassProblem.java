@@ -12,6 +12,7 @@ public class AlgoMassProblem implements Comparable<AlgoMassProblem> {
     }
 
     public int compareTo(AlgoMassProblem o) {
+
         return this.getName().compareTo(o.getName());
     }
 
@@ -21,13 +22,18 @@ public class AlgoMassProblem implements Comparable<AlgoMassProblem> {
             return true;
         }
 
-        if (!(other instanceof AlgoConnectionInstance)) {
+        if (!(other instanceof AlgoMassProblem)) {
             return false;
         }
 
         AlgoMassProblem otherMassProblem = (AlgoMassProblem) other;
 
-        return this.getName() == otherMassProblem.getName();
+        return this.getName().equals(otherMassProblem.getName());
+    }
+
+    @Override
+    public int hashCode(){
+        return this.getName().length();
     }
 
     public String getName() {

@@ -162,7 +162,7 @@ public class ConnectionAlgorithm {
         List<List<AlgoConnectionInstance>> massProblemConnectionInstanceList = new ArrayList<List<AlgoConnectionInstance>>();
 
         for(int i = 0; i < massProblemList.size(); i++){
-            if(massProblemList.get(i) == massProblem){
+            if(massProblemList.get(i).equals(massProblem)){
                 massProblemConnectionInstanceList.add(connectionInstanceLists.get(i));
                 massProblemConnectionInstanceList.add(connectionInstanceLists.get(i + 1));
             }
@@ -175,7 +175,7 @@ public class ConnectionAlgorithm {
         Map<AlgoConnection, Set<AlgoConnectionInstance>> groupedMassProblemConnectionInstances = new LinkedHashMap<AlgoConnection, Set<AlgoConnectionInstance>>();
 
         for(Map.Entry entry : groupedMassProblems.entrySet()){
-            if(entry.getKey() == massProblem){
+            if(entry.getKey().equals(massProblem)){
                 for(AlgoConnection connection : connectionSet){
                     groupedMassProblemConnectionInstances.put(connection, findByConnection(connection, (List<List<AlgoConnectionInstance>>)entry.getValue()));
                 }

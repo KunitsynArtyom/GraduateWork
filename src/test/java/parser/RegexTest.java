@@ -1,7 +1,6 @@
 package parser;
 
 import diploma.logic.parsers.entities.QueryAttribute;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ public class RegexTest {
         System.out.println("str1" + str1);
         System.out.println(getAttributes(str1));
     }
+
 
     private String parseFunctionHeader(String sqlFunction, String functionHeaderRegex) {
         String functionHeader = "";

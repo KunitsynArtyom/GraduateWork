@@ -1,6 +1,7 @@
 package diploma.logic.controllers;
 
 import diploma.logic.algos.services.AcyclicDownTopAlgorithmService;
+import diploma.logic.entities.IndividualTask;
 import diploma.logic.entities.Request;
 import diploma.logic.entities.MassProblem;
 import diploma.logic.graphs.prodsys.entities.Implication;
@@ -58,19 +59,9 @@ public class MassProblemController {
 
     @RequestMapping(value = "/all", method = RequestMethod.POST)
     public String parseSD(Model model, @ModelAttribute Request request){
-        MassProblemRepo massProblemRepo = context.getBean(MassProblemRepo.class);
-        List<MassProblem> massProblemList = massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
-//        List<List<String>> parsedFunctionQueryList = new ArrayList<List<String>>();
-//        List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
-//
-//        for (MassProblem massProblem : massProblemList) {
-//            parsedFunctionQueryList.add(new SQLFunctionParser(massProblem.getName()).parseSQLFunction());
-//        }
-//
-//        for (List<String> list : parsedFunctionQueryList) {
-//            implicationList.add(new SQLParser(list).getImplication());
-//        }
-
+        IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
+        List<IndividualTask> massProblemList = individualTaskRepo.findByMassProblemId(Integer.parseInt(request.getRequest()));
+        //massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
         AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(AcyclicDownTopAlgorithmService.createImplicationList(massProblemList));
 
         model.addAttribute("vertexList", acyclicDownTopAlgorithmService.getVertexList());
@@ -79,5 +70,4 @@ public class MassProblemController {
 
         return "graphs/graph";
     }
-
 }

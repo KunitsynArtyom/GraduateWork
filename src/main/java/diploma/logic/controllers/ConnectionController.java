@@ -52,6 +52,7 @@ public class ConnectionController {
         ConnectionStateRepo connectionStateRepo  = context.getBean(ConnectionStateRepo.class);
         ConnectionStateInstanceRepo connectionStateInstanceRepo  = context.getBean(ConnectionStateInstanceRepo.class);
         MassProblemRepo massProblemRepo = context.getBean(MassProblemRepo.class);
+        IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
 
         List<Connection> connections = connectionRepo.findBySDId(Integer.parseInt(request.getRequest()));
         List<List<AlgoConnectionInstance>> connectionInstanceList = new ArrayList<List<AlgoConnectionInstance>>();
@@ -62,14 +63,14 @@ public class ConnectionController {
         List<Integer> distinctSDList = connectionStateRepo.getAllDistinctSDStateBySDId(Integer.parseInt(request.getRequest()));
         List<ConnectionStateInstance> connectionStateInstanceList = connectionStateInstanceRepo.getOrderedByConnectionInstanceList(Integer.parseInt(request.getRequest()));
         connectionInstanceList = connectionAlgorithmService.getAlgoConnectionInstanceList(context, distinctSDList, connectionStateInstanceList);
-        List<MassProblem> massProblemList = massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
+        //List<MassProblem> massProblemList = massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
 
         List<AlgoMassProblem> algoMassProblemList = new ArrayList<AlgoMassProblem>();
-        AlgoMassProblem massProblem1 = new AlgoMassProblem("Mass Problem 1");
-        AlgoMassProblem massProblem2 = new AlgoMassProblem("Mass Problem 2");
-        algoMassProblemList.add(massProblem1);
-        algoMassProblemList.add(massProblem2);
-        algoMassProblemList.add(massProblem1);
+        List<IndividualTask> individualTaskList = individualTaskRepo.getOrderedIndividualTaskListForSD(Integer.parseInt(request.getRequest()));
+
+        for(IndividualTask individualTask : individualTaskList){
+            algoMassProblemList.add(new AlgoMassProblem(massProblemRepo.findById(individualTask.getMassProblemId()).getName()));
+        }
 
         ConnectionAlgorithm connectionAlgorithm = new ConnectionAlgorithm();
         connectionAlgorithm.calculate(algoConnectionList, connectionInstanceList, algoMassProblemList);
@@ -84,7 +85,6 @@ public class ConnectionController {
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAllException(Exception ex) {
         ModelAndView model = new ModelAndView("errors/error");
-
         model.addObject("errMsg", ex.getMessage());
         return model;
     }

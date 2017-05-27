@@ -24,7 +24,6 @@ public class ConnectionAlgorithmService {
         Map<Obj, List<AlgoObjInstance>> objListMap = new LinkedHashMap<Obj, List<AlgoObjInstance>>();
         List<AlgoObj> algoObjList = new ArrayList<AlgoObj>();
 
-
         for (Map.Entry entry : objMap.entrySet()) {
             objListMap.put((Obj) entry.getKey(), convertObjInstanceListToAlgoObjInstance((List<ObjectInstance>) entry.getValue()));
         }
@@ -129,15 +128,4 @@ public class ConnectionAlgorithmService {
 
         return connectionInstanceList;
     }
-
-    public List<AlgoMassProblem> getAlgoMassProblemList(List<MassProblem> massProblemList) {
-        List<AlgoMassProblem> algoMassProblemList = new ArrayList<AlgoMassProblem>();
-
-        for (MassProblem massProblem : massProblemList) {
-            //algoMassProblemList.add();
-        }
-
-        return algoMassProblemList;
-    }
-
 }

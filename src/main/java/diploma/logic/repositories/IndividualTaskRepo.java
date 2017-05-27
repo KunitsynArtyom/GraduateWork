@@ -12,4 +12,6 @@ public interface IndividualTaskRepo extends Repo<IndividualTask> {
     List<IndividualTask> getAllIndividualTaskList();
 
     List<IndividualTask> findByMassProblemId(Integer id);
+
+    List<IndividualTask> getOrderedIndividualTaskListForSD(Integer id);
 }

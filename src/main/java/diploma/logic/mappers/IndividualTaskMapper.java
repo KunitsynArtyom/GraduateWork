@@ -14,6 +14,8 @@ public class IndividualTaskMapper implements RowMapper<IndividualTask> {
         IndividualTask individualTask = new IndividualTask();
         individualTask.setId(rs.getInt("individual_task_id"));
         individualTask.setMassProblemId(rs.getInt("mass_problem_id"));
+        individualTask.setPriority(rs.getInt("priority"));
+        individualTask.setIndividualTask(rs.getString("individual_task"));
         return individualTask;
     }
 }

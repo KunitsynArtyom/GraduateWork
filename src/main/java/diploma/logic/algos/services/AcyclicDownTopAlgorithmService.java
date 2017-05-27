@@ -1,6 +1,7 @@
 package diploma.logic.algos.services;
 
 import diploma.logic.algos.AcyclicDownTopAlgorithm;
+import diploma.logic.entities.IndividualTask;
 import diploma.logic.entities.MassProblem;
 import diploma.logic.graphs.Graph;
 import diploma.logic.graphs.Vertex;
@@ -69,12 +70,12 @@ public class AcyclicDownTopAlgorithmService {
         initializeVertexConnectionList();
     }
 
-    public static List<Implication<QueryAttribute>> createImplicationList(List<MassProblem> massProblemList){
+    public static List<Implication<QueryAttribute>> createImplicationList(List<IndividualTask> massProblemList){
         List<List<String>> parsedFunctionQueryList = new ArrayList<List<String>>();
         List<Implication<QueryAttribute>> implicationList = new ArrayList<Implication<QueryAttribute>>();
 
-        for (MassProblem massProblem : massProblemList) {
-            parsedFunctionQueryList.add(new SQLFunctionParser(massProblem.getName()).parseSQLFunction());
+        for (IndividualTask massProblem : massProblemList) {
+            parsedFunctionQueryList.add(new SQLFunctionParser(massProblem.getIndividualTask()).parseSQLFunction());
         }
 
         for (List<String> list : parsedFunctionQueryList) {
