@@ -10,4 +10,6 @@ import java.util.List;
 public interface ConnectionInstanceRepo  extends Repo<ConnectionInstance> {
 
     List<ConnectionInstance> getAllConnectionInstanceList();
+
+    List<ConnectionInstance> findConnectionInstanceListByConnId(Integer id);
 }

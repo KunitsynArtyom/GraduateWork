@@ -24,12 +24,14 @@
     <table class="table table-hover table-bordered">
         <body>
         <tr>
-            <th>Individual Task Id</th><th>Mass Problem Id</th>
+            <th>Individual Task Id</th><th>Mass Problem Id</th><th>Priority</th><th>Individual Task</th>
         </tr>
         <c:forEach items="${individualTaskList}" var="individualTask">
             <tr>
                 <td><a href="${individualTask.id}"/> <c:out value="${individualTask.id}" /></td>
                 <td><a href="<spring:url value="/massProblem/${individualTask.massProblemId}"/>"><c:out value="${individualTask.massProblemId}" /></a></td>
+                <td><c:out value="${individualTask.priority}" /></td>
+                <td><c:out value="${individualTask.individualTask}" /></td>
             </tr>
         </c:forEach>
         </body>

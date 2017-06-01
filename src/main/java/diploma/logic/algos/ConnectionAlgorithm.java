@@ -143,7 +143,7 @@ public class ConnectionAlgorithm {
     public void calculateMassProblemsScales(){
         groupConnectionInstancesByMassProblems();
         groupConnectionsByMassProblems();
-        calculateCreateProbability();
+        calculateCreateDestroyProbability();
     }
 
     private void groupConnectionInstancesByMassProblems(){
@@ -200,7 +200,7 @@ public class ConnectionAlgorithm {
         return connectionInstances;
     }
 
-    private void calculateCreateProbability(){
+    private void calculateCreateDestroyProbability(){
         Map<AlgoConnection, Set<AlgoConnectionInstance>> groupedConnectionInstanceMap;
 
         for(Map.Entry entry : groupedMassProblemsConnections.entrySet()){

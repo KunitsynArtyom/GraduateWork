@@ -110,7 +110,7 @@ public class GraphController {
         }
 
         AcyclicDownTopAlgorithm acyclicDownTopAlgorithm = new AcyclicDownTopAlgorithm();
-        Collection<DefiningAttribute> definingAttributes = acyclicDownTopAlgorithm.getDefiningAttribute(graph);
+        Collection<DefiningAttribute> definingAttributes = acyclicDownTopAlgorithm.getDefiningAttributes(graph);
 
         model.addAttribute("vertexList", vertexList);
         model.addAttribute("vertexConnectionList", vertexConnectionList);

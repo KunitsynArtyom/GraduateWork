@@ -5,7 +5,9 @@ import diploma.logic.algos.entities.AlgoConnection;
 import diploma.logic.algos.entities.AlgoConnectionInstance;
 import diploma.logic.algos.entities.AlgoMassProblem;
 import diploma.logic.algos.services.ConnectionAlgorithmService;
+import diploma.logic.algos.services.StatService;
 import diploma.logic.entities.*;
+import diploma.logic.entities.stat.InsertStat;
 import diploma.logic.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -43,6 +45,7 @@ public class ConnectionController {
     public String showInfo(Model model, @PathVariable("id") Integer id){
         ConnectionRepo connectionRepo = context.getBean(ConnectionRepo.class);
         model.addAttribute("connection", connectionRepo.findById(id));
+        model.addAttribute("connectionInstanceList", connectionRepo.findBySDId(id));
         return "info/connectionInfo";
     }
 
@@ -53,6 +56,7 @@ public class ConnectionController {
         ConnectionStateInstanceRepo connectionStateInstanceRepo  = context.getBean(ConnectionStateInstanceRepo.class);
         MassProblemRepo massProblemRepo = context.getBean(MassProblemRepo.class);
         IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
+        StatAlgoRepo statAlgoRepo = context.getBean(StatAlgoRepo.class);
 
         List<Connection> connections = connectionRepo.findBySDId(Integer.parseInt(request.getRequest()));
         List<List<AlgoConnectionInstance>> connectionInstanceList = new ArrayList<List<AlgoConnectionInstance>>();
@@ -63,7 +67,6 @@ public class ConnectionController {
         List<Integer> distinctSDList = connectionStateRepo.getAllDistinctSDStateBySDId(Integer.parseInt(request.getRequest()));
         List<ConnectionStateInstance> connectionStateInstanceList = connectionStateInstanceRepo.getOrderedByConnectionInstanceList(Integer.parseInt(request.getRequest()));
         connectionInstanceList = connectionAlgorithmService.getAlgoConnectionInstanceList(context, distinctSDList, connectionStateInstanceList);
-        //List<MassProblem> massProblemList = massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
 
         List<AlgoMassProblem> algoMassProblemList = new ArrayList<AlgoMassProblem>();
         List<IndividualTask> individualTaskList = individualTaskRepo.getOrderedIndividualTaskListForSD(Integer.parseInt(request.getRequest()));
@@ -74,6 +77,20 @@ public class ConnectionController {
 
         ConnectionAlgorithm connectionAlgorithm = new ConnectionAlgorithm();
         connectionAlgorithm.calculate(algoConnectionList, connectionInstanceList, algoMassProblemList);
+
+        StatService statService = new StatService();
+        List<InsertStat> stabilityInsertList = statService.convertToInsertStatList(connectionAlgorithm.getStability(),
+                statAlgoRepo.getConnectionsAlgoId(), "Stability");
+        List<InsertStat> inevitabilityInsertList = statService.convertToInsertStatList(connectionAlgorithm.getInevitability(),
+                statAlgoRepo.getConnectionsAlgoId(), "Inevitability");
+
+        for(InsertStat insertStat : stabilityInsertList){
+            statAlgoRepo.insertNewStat(insertStat);
+        }
+
+        for(InsertStat insertStat : inevitabilityInsertList){
+            statAlgoRepo.insertNewStat(insertStat);
+        }
 
         model.addAttribute("stabilityMap", connectionAlgorithm.getStability());
         model.addAttribute("inevitabilityMap", connectionAlgorithm.getInevitability());

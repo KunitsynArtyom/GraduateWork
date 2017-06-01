@@ -36,4 +36,29 @@
             <p class="list-group-item-text">${connection.name}</p>
         </a>
     </div>
+
+    <div class="container">
+        <p>Click on the button to show elements that reference to this element.</p>
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">More information</button>
+        <div id="demo" class="collapse">
+            <div class="container">
+                <h2>Connection Instances</h2>
+                <table class="table table-hover table-bordered">
+                    <body>
+                    <tr>
+                        <th>Connection Instance Id</th>
+                        <th>Connection Instance Name</th>
+                    </tr>
+                    <c:forEach items="${connectionInstanceList}" var="connectionInstance">
+                        <tr>
+                            <td><a href="<spring:url value="/connectionInstance/${connectionInstance.id}"/>"> <c:out value="${connectionInstance.id}"/></a></td>
+                            <td><c:out value="${connectionInstance.name}"/></td>
+                        </tr>
+                    </c:forEach>
+                    </body>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>

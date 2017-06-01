@@ -42,7 +42,7 @@ public class AcyclicDownTopAlgorithmService {
 
     public Collection<DefiningAttribute> getDefiningAttributes() {
         AcyclicDownTopAlgorithm acyclicDownTopAlgorithm = new AcyclicDownTopAlgorithm();
-        return acyclicDownTopAlgorithm.getDefiningAttribute(graph);
+        return acyclicDownTopAlgorithm.getDefiningAttributes(graph);
     }
 
     private void initializeVertexList() {

@@ -11,8 +11,10 @@
     <style type="text/css">
         #network {
             width: 1000px;
-            height: 400px;
-            border: 1px solid lightgray;
+            height: 500px;
+            border: 2px solid lightgray;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         td {
@@ -20,11 +22,13 @@
         }
 
         table {
-            width: 800px;
+            width: 400px;
         }
 
         #attributes {
-            margin-top: 550px;
+            margin-top: 600px;
+            margin-left: 200px;
+            margin-right: 200px;
             left: 170px;
             bottom: 0;
             right: 0;
@@ -54,7 +58,8 @@
 
             var options = {
                 title: '',
-                width: 900,
+                height: 800,
+                width: 1500,
                 legend: {position: 'none'},
                 chart: {
                     title: 'Attribute Measures:',
@@ -133,7 +138,9 @@
 
     </script>
 </div>
+</body>
 
+<body>
 <div id="attributes">
     <table class="table table-hover table-bordered">
         <body>
@@ -150,11 +157,10 @@
         </body>
     </table>
 </div>
-
 </body>
 
 <body>
-<div id="top_x_div" style="width: 900px; height: 500px;"></div>
+<div id="top_x_div" style="width: 900px; height: 500px; margin-left: 200px;"></div>
 </body>
 
 </div>

@@ -34,7 +34,7 @@ public class AcyclicDownTopAlgorithm {
         attributesMeasures = new ConcurrentHashMap<Vertex<QueryAttribute>, Double>();
     }
 
-    public Collection<DefiningAttribute> getDefiningAttribute(Graph graph) {
+    public Collection<DefiningAttribute> getDefiningAttributes(Graph graph) {
         try {
             Graph<QueryAttribute> attributesGraph = graph;
             initializeFields(attributesGraph);
@@ -103,7 +103,6 @@ public class AcyclicDownTopAlgorithm {
             if(updatedValue == 0){
                 vertexesToProcess.add(parent);
             }
-
         }
     }
 

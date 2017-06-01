@@ -20,7 +20,7 @@ public class ConnectionInstanceRepoImpl implements ConnectionInstanceRepo {
 
     private static final String GET_ALL_CONN_INST_LIST = "SELECT * FROM \"public\".\"connection_instance\"";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM \"public\".\"connection_instance\" WHERE connection_instance_id = ?";
-
+    private static final String FIND_BY_CONN_ID = "SELECT * FROM \"public\".\"connection_instance\" WHERE connection_id = ?";
 
     @Autowired
     public ConnectionInstanceRepoImpl(DataSource dataSource){
@@ -33,5 +33,9 @@ public class ConnectionInstanceRepoImpl implements ConnectionInstanceRepo {
 
     public ConnectionInstance findById(Integer id){
         return this.template.queryForObject(FIND_BY_ID_QUERY, new Object[] {id}, new ConnectionInstanceMapper());
+    }
+
+    public List<ConnectionInstance> findConnectionInstanceListByConnId(Integer id){
+        return this.template.query(FIND_BY_CONN_ID, new Object[] {}, new ConnectionInstanceMapper());
     }
 }

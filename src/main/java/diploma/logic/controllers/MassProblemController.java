@@ -1,9 +1,12 @@
 package diploma.logic.controllers;
 
 import diploma.logic.algos.services.AcyclicDownTopAlgorithmService;
+import diploma.logic.algos.services.StatService;
 import diploma.logic.entities.IndividualTask;
 import diploma.logic.entities.Request;
 import diploma.logic.entities.MassProblem;
+import diploma.logic.entities.stat.InsertStat;
+import diploma.logic.graphs.prodsys.entities.DefiningAttribute;
 import diploma.logic.graphs.prodsys.entities.Implication;
 import diploma.logic.parsers.SQLFunctionParser;
 import diploma.logic.parsers.SQLParser;
@@ -11,6 +14,7 @@ import diploma.logic.parsers.entities.QueryAttribute;
 import diploma.logic.repositories.IndividualTaskRepo;
 import diploma.logic.repositories.MassProblemRepo;
 import diploma.logic.repositories.ParameterRepo;
+import diploma.logic.repositories.StatAlgoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -60,9 +64,16 @@ public class MassProblemController {
     @RequestMapping(value = "/all", method = RequestMethod.POST)
     public String parseSD(Model model, @ModelAttribute Request request){
         IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
+        StatAlgoRepo statAlgoRepo = context.getBean(StatAlgoRepo.class);
         List<IndividualTask> massProblemList = individualTaskRepo.findByMassProblemId(Integer.parseInt(request.getRequest()));
-        //massProblemRepo.findBySDId(Integer.parseInt(request.getRequest()));
         AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(AcyclicDownTopAlgorithmService.createImplicationList(massProblemList));
+        List<DefiningAttribute> definingAttributeList = (List<DefiningAttribute>)acyclicDownTopAlgorithmService.getDefiningAttributes();
+
+        Integer algoId = statAlgoRepo.getDefiningAttributesAlgoId();
+
+        for(DefiningAttribute definingAttribute : definingAttributeList){
+            statAlgoRepo.insertNewStat(new InsertStat(algoId, definingAttribute.getMeasure(), definingAttribute.getAttribute().getName(), "definingAttribute"));
+        }
 
         model.addAttribute("vertexList", acyclicDownTopAlgorithmService.getVertexList());
         model.addAttribute("vertexConnectionList", acyclicDownTopAlgorithmService.getVertexConnectionList());

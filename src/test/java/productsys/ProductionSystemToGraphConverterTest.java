@@ -52,7 +52,7 @@ public class ProductionSystemToGraphConverterTest {
         graph = productionSystemToGraphConverter.getGraph();
 
         AcyclicDownTopAlgorithm acyclicDownTopAlgorithm = new AcyclicDownTopAlgorithm();
-        Collection<DefiningAttribute> definingAttributes = acyclicDownTopAlgorithm.getDefiningAttribute(graph);
+        Collection<DefiningAttribute> definingAttributes = acyclicDownTopAlgorithm.getDefiningAttributes(graph);
 
         for(DefiningAttribute definingAttribute : definingAttributes){
             System.out.println(definingAttribute.toString());

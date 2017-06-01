@@ -15,11 +15,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
     <style>
-        .form-control-inline {
-            min-width: 0;
-            width: auto;
-            display: inline;
-        }
+    .form-control-inline {
+        min-width: 0;
+        width: auto;
+        display: inline;
+    }
     </style>
 </head>
 <body>
@@ -49,7 +49,10 @@
 
 </div>
 
+
+
 <div class="container">
+    <h2>Defining Attributes Algorithm</h2>
     <div class="row">
 
         <spring:url value="/massProblem/all" var="formUrl"/>

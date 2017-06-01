@@ -14,6 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+    <style>
+        .form-control-inline {
+            min-width: 0;
+            width: auto;
+            display: inline;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,13 +31,16 @@
     <table class="table table-hover table-bordered">
         <body>
         <tr>
-            <th>Connection Id</th><th>Subject Domain Id</th><th>Connection Name</th>
+            <th>Connection Id</th>
+            <th>Subject Domain Id</th>
+            <th>Connection Name</th>
         </tr>
         <c:forEach items="${connectionList}" var="connection">
             <tr>
-                <td><a href="${connection.id}"/> <c:out value="${connection.id}" /></td>
-                <td><a href="<spring:url value="/subjectDomain/${connection.subjectDomainId}"/>"><c:out value="${connection.subjectDomainId}" /></a></td>
-                <td><c:out value="${connection.name}" /></td>
+                <td><a href="${connection.id}"/> <c:out value="${connection.id}"/></td>
+                <td><a href="<spring:url value="/subjectDomain/${connection.subjectDomainId}"/>"><c:out
+                        value="${connection.subjectDomainId}"/></a></td>
+                <td><c:out value="${connection.name}"/></td>
             </tr>
         </c:forEach>
         </body>
@@ -38,7 +48,10 @@
 
 </div>
 
+
+
 <div class="container">
+    <h2>Connection Algorithm</h2>
     <div class="row">
 
         <spring:url value="/connection/all" var="formUrl"/>
