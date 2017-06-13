@@ -1,6 +1,5 @@
 package diploma.logic.algos;
 
-
 import diploma.logic.graphs.Graph;
 import diploma.logic.graphs.Vertex;
 import diploma.logic.graphs.VertexConnection;
@@ -17,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 public class AcyclicDownTopAlgorithm {
 

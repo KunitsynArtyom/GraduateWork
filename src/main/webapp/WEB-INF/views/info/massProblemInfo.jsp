@@ -67,7 +67,7 @@
                 </tr>
                 <c:forEach items="${individualTaskList}" var="individualTask">
                     <tr>
-                        <td><a href="<spring:url value="/individualTask/${individualTaskList.id}"/>"><c:out value="${individualTask.id}" /></a></td>
+                        <td><a href="<spring:url value="/individualTask/${individualTask.id}"/>"><c:out value="${individualTask.id}" /></a></td>
                         <td><c:out value="${individualTask.priority}" /></td>
                         <td><c:out value="${individualTask.individualTask}" /></td>
                     </tr>

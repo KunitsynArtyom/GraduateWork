@@ -67,6 +67,7 @@ public class ConnectionAlgorithmService {
 
         List<List<ConnectionObjectJoin>> connectionObjectJoinLists = new ArrayList<>();
         Map<Obj, List<ObjectInstance>> objMap = new LinkedHashMap<Obj, List<ObjectInstance>>();
+
         Set<AlgoConnection> algoConnectionList = null;
 
         try {
@@ -84,6 +85,7 @@ public class ConnectionAlgorithmService {
                 }
             }
         } catch (Exception ex) {
+            System.out.println(ex);
             throw new Exception("Errors while getting connectionList!");
         }
 
@@ -123,6 +125,7 @@ public class ConnectionAlgorithmService {
                 connectionInstanceList.add((List<AlgoConnectionInstance>) entry.getValue());
             }
         } catch (Exception ex) {
+            System.out.println(ex);
             throw new Exception("Errors while getting the connection instance list!");
         }
 

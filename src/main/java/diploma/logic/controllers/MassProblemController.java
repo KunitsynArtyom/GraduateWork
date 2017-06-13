@@ -6,6 +6,7 @@ import diploma.logic.entities.IndividualTask;
 import diploma.logic.entities.Request;
 import diploma.logic.entities.MassProblem;
 import diploma.logic.entities.stat.InsertStat;
+import diploma.logic.graphs.Vertex;
 import diploma.logic.graphs.prodsys.entities.DefiningAttribute;
 import diploma.logic.graphs.prodsys.entities.Implication;
 import diploma.logic.parsers.SQLFunctionParser;
@@ -65,6 +66,7 @@ public class MassProblemController {
     public String parseSD(Model model, @ModelAttribute Request request){
         IndividualTaskRepo individualTaskRepo = context.getBean(IndividualTaskRepo.class);
         StatAlgoRepo statAlgoRepo = context.getBean(StatAlgoRepo.class);
+
         List<IndividualTask> massProblemList = individualTaskRepo.findByMassProblemId(Integer.parseInt(request.getRequest()));
         AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(AcyclicDownTopAlgorithmService.createImplicationList(massProblemList));
         List<DefiningAttribute> definingAttributeList = (List<DefiningAttribute>)acyclicDownTopAlgorithmService.getDefiningAttributes();

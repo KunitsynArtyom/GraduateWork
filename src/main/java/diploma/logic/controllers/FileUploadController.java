@@ -93,6 +93,8 @@ public class FileUploadController {
             AcyclicDownTopAlgorithmService acyclicDownTopAlgorithmService = new AcyclicDownTopAlgorithmService(implicationList);
             List<DefiningAttribute> definingAttributeList = (List<DefiningAttribute>)acyclicDownTopAlgorithmService.getDefiningAttributes();
 
+            System.out.println("vishlo1");
+
             Integer algoId = statAlgoRepo.getDefiningAttributesAlgoId();
 
             for(DefiningAttribute definingAttribute : definingAttributeList){

@@ -44,6 +44,9 @@ public class SQLParser {
         try {
 
             for (String sqlLex : sqlLexList) {
+
+                System.out.println(sqlLex);
+
                 if (sqlLex.toLowerCase().contains("select")) {
                     innerAttributes.addAll(getInnerArguments(new SelectQuery(), sqlLex));
                 } else if (sqlLex.toLowerCase().contains("insert")) {
@@ -58,7 +61,24 @@ public class SQLParser {
             }
 
         } catch (JSQLParserException je) {
+            System.out.println("Errors while parsing");
             logger.debug("Errors while parsing");
+        }
+
+        for(QueryAttribute q1 : innerAttributes){
+            System.out.println("innerAttributes:" + q1);
+        }
+
+        for(QueryAttribute q1 : outerAttributes){
+            System.out.println("outerAttributes:" + q1);
+        }
+
+        for(QueryAttribute q1 : innerResults){
+            System.out.println("innerResults:" + q1);
+        }
+
+        for(QueryAttribute q1 : outerResults){
+            System.out.println("outerResults:" + q1);
         }
 
         return new Implication<QueryAttribute>(innerAttributes, outerAttributes, innerResults, outerResults);

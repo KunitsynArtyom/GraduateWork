@@ -27,9 +27,10 @@ public class StatAlgoController {
     public String showStat(Model model){
         StatAlgoRepo repo = context.getBean(StatAlgoRepo.class);
         List<StatAlgo> definingAttributesStatList = repo.getDefiningAttributeStatList();
-        for(StatAlgo statAlgo : definingAttributesStatList){
-            System.out.println(statAlgo.getStatName() + "   " + statAlgo.getStatValue());
-        }
-        return "";
+        List<StatAlgo> connectionsStatList = repo.getConnectionsStatList();
+
+        model.addAttribute("definingAttributesStatList", definingAttributesStatList);
+        model.addAttribute("connectionsStatList", connectionsStatList);
+        return "charts/stat";
     }
 }

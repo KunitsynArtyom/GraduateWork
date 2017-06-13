@@ -50,6 +50,7 @@ public class SQLFunctionParser {
                 functionHeader = matcher.group(1);
             }
         } catch (Exception e) {
+            System.out.println("Errors while parsing");
             logger.debug("Errors while parsing");
         }
 
@@ -66,6 +67,7 @@ public class SQLFunctionParser {
                 sqlQueryList.addAll(Arrays.asList(matcher.group(0).split(";")));
             }
         } catch (Exception e) {
+            System.out.println("Errors while parsing");
             logger.debug("Errors while parsing");
         }
 
@@ -82,6 +84,7 @@ public class SQLFunctionParser {
                 returnStatementList.addAll(Arrays.asList(matcher.group(0)));
             }
         } catch (Exception e) {
+            System.out.println("Errors while parsing");
             logger.debug("Errors while parsing");
         }
 

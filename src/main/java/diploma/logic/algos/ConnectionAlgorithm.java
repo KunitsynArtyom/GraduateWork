@@ -77,6 +77,7 @@ public class ConnectionAlgorithm {
                 m += findLinkedRepeatsByConnectionInstance(connectionInstance);
             }
 
+            System.out.println("=============stability============" + m + "+" + n);
             stability.put((AlgoConnection)entry.getKey(), (double)m/n);
         }
     }
@@ -92,6 +93,7 @@ public class ConnectionAlgorithm {
                 m += findEmergenceByConnectionInstance(connectionInstance);
             }
 
+            System.out.println("=============inevitability============" + m + "+" + n);
             inevitability.put((AlgoConnection)entry.getKey(), (double)m/n);
         }
     }

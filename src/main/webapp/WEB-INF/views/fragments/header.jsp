@@ -45,7 +45,7 @@
                     Statistic <span class="caret"></span></a>
 
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="<spring:url value="/stat/all"/>">Show statistic</a></li>
+                    <li><a href="<spring:url value="/statAlgo/all"/>">Show statistic</a></li>
                 </ul>
 
             </li>

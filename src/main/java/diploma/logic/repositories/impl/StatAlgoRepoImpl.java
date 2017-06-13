@@ -21,12 +21,14 @@ public class StatAlgoRepoImpl implements StatAlgoRepo {
     private JdbcTemplate template;
     private DataSource dataSource;
 
-    private static final String GET_DEF_ATT_STAT_LIST = "SELECT st.stat_name, st.stat_value " +
+    private static final String GET_DEF_ATT_STAT_LIST = "SELECT st.additional_info, st.stat_name, st.stat_value " +
             "FROM \"public\".\"algo\" al RIGHT JOIN \"public\".\"stat\" st ON st.algo_id = al.algo_id " +
-            "WHERE al.algo_name = 'defAttributes';";
-    private static final String GET_CONN_STAT_LIST = "SELECT st.stat_name, st.stat_value " +
+            "WHERE al.algo_name = 'defAttributes' " +
+            "ORDER BY st.stat_value;";
+    private static final String GET_CONN_STAT_LIST = "SELECT st.additional_info, st.stat_name, st.stat_value " +
             "FROM \"public\".\"algo\" al RIGHT JOIN \"public\".\"stat\" st ON st.algo_id = al.algo_id " +
-            "WHERE al.algo_name = 'connections';";
+            "WHERE al.algo_name = 'connections' " +
+            "ORDER BY st.stat_name, st.additional_info;";
     private static final String GET_DEF_ATT_ALGO_ID  = "SELECT algo_id " +
             "FROM \"public\".\"algo\" " +
             "WHERE algo_name = 'defAttributes';";

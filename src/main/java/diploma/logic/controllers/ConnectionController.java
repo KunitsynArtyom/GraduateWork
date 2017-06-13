@@ -83,12 +83,24 @@ public class ConnectionController {
                 statAlgoRepo.getConnectionsAlgoId(), "Stability");
         List<InsertStat> inevitabilityInsertList = statService.convertToInsertStatList(connectionAlgorithm.getInevitability(),
                 statAlgoRepo.getConnectionsAlgoId(), "Inevitability");
+        List<InsertStat> createProbabilityInsertList = statService.convertToInsertConnectionStatList(connectionAlgorithm.getCreateProbability(),
+                statAlgoRepo.getConnectionsAlgoId(), "Create Probability");
+        List<InsertStat> destroyProbabilityInsertList = statService.convertToInsertConnectionStatList(connectionAlgorithm.getDestroyProbability(),
+                statAlgoRepo.getConnectionsAlgoId(), "Destroy Probability");
 
         for(InsertStat insertStat : stabilityInsertList){
             statAlgoRepo.insertNewStat(insertStat);
         }
 
         for(InsertStat insertStat : inevitabilityInsertList){
+            statAlgoRepo.insertNewStat(insertStat);
+        }
+
+        for(InsertStat insertStat : createProbabilityInsertList){
+            statAlgoRepo.insertNewStat(insertStat);
+        }
+
+        for(InsertStat insertStat : destroyProbabilityInsertList){
             statAlgoRepo.insertNewStat(insertStat);
         }
 

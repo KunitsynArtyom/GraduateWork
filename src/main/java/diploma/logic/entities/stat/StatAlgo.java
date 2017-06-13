@@ -6,7 +6,7 @@ package diploma.logic.entities.stat;
 public class StatAlgo {
 
     private Double statValue;
-    private String statName;
+    private String statName, additionalInfo;
 
     public StatAlgo() {
 
@@ -31,5 +31,13 @@ public class StatAlgo {
 
     public void setStatValue(Double statValue) {
         this.statValue = statValue;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String addtionalInfo) {
+        this.additionalInfo = addtionalInfo;
     }
 }
