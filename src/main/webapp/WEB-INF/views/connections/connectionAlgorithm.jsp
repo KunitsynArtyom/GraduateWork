@@ -259,7 +259,7 @@
     <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo4">Destroy Probability</button>
     <div id="demo4" class="collapse">
 
-        <h2>CreateProbability</h2>
+        <h2>DestroyProbability</h2>
         <table class="table table-hover table-bordered">
             <body>
             <tr>

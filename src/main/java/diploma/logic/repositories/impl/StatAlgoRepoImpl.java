@@ -29,9 +29,11 @@ public class StatAlgoRepoImpl implements StatAlgoRepo {
             "FROM \"public\".\"algo\" al RIGHT JOIN \"public\".\"stat\" st ON st.algo_id = al.algo_id " +
             "WHERE al.algo_name = 'connections' " +
             "ORDER BY st.stat_name, st.additional_info;";
+
     private static final String GET_DEF_ATT_ALGO_ID  = "SELECT algo_id " +
             "FROM \"public\".\"algo\" " +
             "WHERE algo_name = 'defAttributes';";
+
     private static final String GET_CONN_ALGO_ID  = "SELECT algo_id " +
             "FROM \"public\".\"algo\" " +
             "WHERE algo_name = 'connections';";
